@@ -21,8 +21,8 @@ export default function CourseHeader() {
 				as={Link}
 				href={item.href}
 				className={`px-4 py-2 ${isMobile
-						? 'group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-indigo-100'
-						: 'text-gray-700 hover:text-gray-900 hover:bg-indigo-300 rounded-md'
+					? 'group flex w-full items-center rounded-md px-2 py-2 text-sm hover:bg-indigo-100'
+					: 'text-gray-700 hover:text-gray-900 hover:bg-indigo-300 rounded-md'
 					}`}
 				onClick={isMobile ? () => setIsOpen(false) : undefined}
 			>

@@ -2,7 +2,7 @@ import { Button } from "@headlessui/react"
 import Image from "next/image"
 import Link from "next/link"
 
-export const Hero = ({userId}: {userId: string | null}) => {
+export const Hero = ({ userId }: { userId: string | null }) => {
 
 	return (
 		<div className="bg-white flex relative pt-6 md:p-10 z-20 items-center overflow-hidden">

@@ -108,7 +108,7 @@ export const mockCourses: Course[] = [
 							{
 								id: 'MoTL2vEmix',
 								activityId: '2',
-								title: 'Death of Stars: Supernovae and Black Holes',
+								title: 'Supernovae and Black Hole Deaths',
 								duration: '10min',
 								status: 'in-progress',
 								description: 'The final fate of a star depends crucially on its mass. Stars between 1.4 and 3 solar masses will end their lives as neutron stars, incredibly dense objects where a teaspoon of material would weigh billions of tons. However, stars with cores more massive than 3 solar masses experience such powerful gravitational collapse that they form black holes. When this happens, the gravitational pull becomes so strong that nothing, not even light, can escape from within a boundary called the event horizon.',
