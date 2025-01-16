@@ -17,6 +17,14 @@ const Sidebar = ({ activities, selectedIndex, onChange }: SidebarProps) => {
 		setIsSidebarOpen(!isSidebarOpen);
 	};
 
+	const handleTabChange = (index: number) => {
+    onChange(index);
+		// Close the sidebar on mobile when activity selected
+    if (window.innerWidth < 1024) {
+      setIsSidebarOpen(false);
+    }
+  };
+
 	return (
 		<aside className="relative flex">
 			<button
@@ -33,7 +41,7 @@ const Sidebar = ({ activities, selectedIndex, onChange }: SidebarProps) => {
 				<div className="p-4">
 					<span>Activity Outline</span>
 				</div>
-				<TabGroup selectedIndex={selectedIndex} onChange={onChange}>
+				<TabGroup selectedIndex={selectedIndex} onChange={handleTabChange}>
 					<TabList className="flex-none border-r min-h-screen">
 						{activities.map((activity) => (
 							<Tab

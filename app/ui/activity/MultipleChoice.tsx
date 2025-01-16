@@ -2,6 +2,7 @@ import { AnswerOption } from '@/app/lib/data';
 import { Radio, RadioGroup } from '@headlessui/react';
 import { CheckCircle, Circle } from 'lucide-react';
 import React, { useState } from 'react';
+import QuestionFeeback from './QuestionFeedback';
 
 type MultipleChoiceQuestionProps = {
 	questionNumber: string;
@@ -33,22 +34,10 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 	return (
 		<>
 			<div className="flex items-start gap-2 mb-4">
-				{selectedAnswer && isCorrect === false && (
-					<div className="flex-shrink-0 mt-1">
-						<div className="w-5 h-5 rounded-full bg-red-500 flex items-center justify-center">
-							<span className="text-white text-sm">×</span>
-						</div>
-					</div>
-				)}
-				{selectedAnswer && isCorrect === true && (
-					<div className="flex-shrink-0 mt-1">
-						<div className="w-5 h-5 rounded-full bg-green-500 flex items-center justify-center">
-							<span className="text-white text-sm">
-								<CheckCircle color="green" />
-							</span>
-						</div>
-					</div>
-				)}
+				<QuestionFeeback
+					selectedAnswer={selectedAnswer} 
+					isCorrect={isCorrect} 
+				/>
 				<p className="text-sm">
 					<span className="font-medium">{questionNumber}. </span>
 					{questionText}
