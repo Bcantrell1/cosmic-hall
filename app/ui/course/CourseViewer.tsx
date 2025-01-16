@@ -10,7 +10,7 @@ export const CourseViewer: React.FC<Course> = ({
   description,
   units,
 }) => (
-  <div className="p-6">
+  <div className="pt-3">
     <div className="mb-6">
       <h2 className="text-2xl font-bold">{name}</h2>
       <p className="text-gray-600 mt-2">{description}</p>
@@ -28,7 +28,7 @@ export const CourseViewer: React.FC<Course> = ({
 										}`}
 									/>
 									<div className="pl-2">
-										<h3 className="font-medium">Unit {unit.id}: {unit.title}</h3>
+										<h3 className="font-medium">Unit {unit.unitId}: {unit.title}</h3>
 										<div className="w-full h-2 bg-gray-200 rounded-full mt-2">
 											<div
 												className="h-2 bg-green-500 rounded-full"
@@ -47,7 +47,7 @@ export const CourseViewer: React.FC<Course> = ({
                     key={session.id}
                     className="flex justify-between items-center py-2"
                   >
-                    <span>Session {session.id}: {session.title}</span>
+                    <span>Session {session.sessionId}: {session.title}</span>
                     <div className="flex items-center gap-4">
                       <span className="text-gray-600">{session.duration}</span>
                       <Button as={Link} href={`/course/${id}/session/${session.id}`} className="px-3 py-1 text-sm bg-blue-500 text-white rounded">

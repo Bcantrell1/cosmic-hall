@@ -6,7 +6,6 @@ import MultipleChoiceQuestion from "../activity/MultipleChoice";
 import Sidebar from "./SessionSidebar";
 
 export const SessionViewer: React.FC<Session> = ({
-	id,
 	title,
 	activities
 })=> {
@@ -22,7 +21,7 @@ export const SessionViewer: React.FC<Session> = ({
 			<section className="flex flex-col w-full">
 				<div className="flex p-4 justify-between">
 					<div className="flex gap-2">
-						<div>{id}</div>
+						<div>{activities[selectedIndex].activityId}</div>
 						<div>{title}</div>
 					</div>
 					<div className="flex gap-2">
@@ -36,8 +35,8 @@ export const SessionViewer: React.FC<Session> = ({
             <div className="flex justify-between items-center">
               <h1 className="text-xl font-semibold">{activities[selectedIndex].title}</h1>
               <div className="space-x-4">
-                <span className="text-gray-600">Duration: {activities[selectedIndex].duration}</span>
-                <span className="text-gray-600">Status: {activities[selectedIndex].status}</span>
+                <span className="text-gray-600"><span className="hidden md:inline-block">Duration:</span> {activities[selectedIndex].duration}</span>
+                <span className="text-gray-600"><span className="hidden md:inline-block">Status:</span> {activities[selectedIndex].status}</span>
               </div>
             </div>
 						{activities[selectedIndex]?.description}
@@ -56,7 +55,7 @@ export const SessionViewer: React.FC<Session> = ({
 									<h3 className="py-3 text-xl">Question:</h3>
 									{
 										activities[selectedIndex].questions.map((question) => {
-											return <MultipleChoiceQuestion key={question.id} questionNumber={question.id} questionText={question.question} options={question.options} correctAnswer={question.correct} />
+											return <MultipleChoiceQuestion key={question.id} questionNumber={question.questionId} questionText={question.question} options={question.options} correctAnswer={question.correct} />
 										})
 									}
 								</>
