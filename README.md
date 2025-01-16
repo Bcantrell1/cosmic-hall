@@ -17,6 +17,7 @@ A basic learning platform built with Next.js 15, headless ui, and Clerk, designe
 
 - [Next.js 15](https://nextjs.org/) - React framework
 - [TypeScript](https://www.typescriptlang.org/) - Javascript Superset
+- [Headless UI](https://headlessui.com/) - UI Components
 - [Tailwind CSS](https://tailwindcss.com/) - Styling
 - [Clerk](https://clerk.com/) - Authentication
 
