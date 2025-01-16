@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cosmic Hall 🌌
 
-## Getting Started
+A basic learning platform built with Next.js 15, headless ui, and Clerk, designed to provide an engaging course experience for curious minds.
 
-First, run the development server:
+![Wireframes for page structure](./public/wireframes.png)
+*Platform wireframes showing course selection, course overview, and session views*
 
+## Features ✨
+
+- **Course Selection**: Browse and select from available courses with static progress tracking
+- **Basic Course Overview**: Comprehensive view of course units, sessions, and progress(WIP)
+- **Interactive Sessions**: Structured learning activities with estimated duration tracking for each session
+- **Responsive Design**: Mobile and Desktop friendly experience 
+- **User Authentication**: Login and user management using Clerk.
+
+## Tech Stack 🛠️
+
+- [Next.js 15](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Javascript Superset
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Clerk](https://clerk.com/) - Authentication
+
+## Prerequisites 📋
+
+- Node.js 18.17 or later
+- pnpm (preferred) or yarn or npm
+
+## Installation 🚀
+
+1. Clone the repository:
 ```bash
-npm run dev
+git clone https://github.com/Bcantrell1/cosmic-hall.git
+```
+
+2. Navigate to the project directory:
+```bash
+cd cosmic-hall
+```
+
+3. Install dependencies:
+```bash
+pnpm install
+# or
+npm install
+# or
+yarn
+```
+
+4. Create a `.env.local` file in the root directory:
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your-public-clerk-key
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+CLERK_SECRET_KEY=your-clerk-key
+```
+
+5. Start the development server:
+```bash
+pnpm run dev
 # or
 yarn dev
 # or
-pnpm dev
-# or
-bun dev
+npm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## TODO List 📝
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [ ] Add database and ORM for progress tracking
+- [ ] Implement course search and filtering
+- [ ] Add course completion certificates
+- [ ] Add support for different content types (video, quizzes, assessments)
+- [ ] Create admin dashboard for statistics
+- [ ] Implement user feedback system
+- [ ] Host on Google Cloud Platform instead of vercel
 
-## Learn More
+## Contribute to my project 🤝
 
-To learn more about Next.js, take a look at the following resources:
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License 📄
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is licensed under the [MIT License](LICENSE) - see the LICENSE file for details.
 
-## Deploy on Vercel
+## Contact 📧
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Brian Cantrell - cantrellbrian546@gmail.com
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Project Link: [https://github.com/Bcantrell1/cosmic-hall](https://github.com/Bcantrell1/cosmic-hall)
