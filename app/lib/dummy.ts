@@ -5,21 +5,21 @@ export const mockCourses: Course[] = [
 		id: 'voust4LOvZ',
 		name: "Introduction to the Cosmos",
 		description: "Explore the fundamental concepts of the universe and its origins",
-		courseProgress: { currentUnit: 1, totalUnits: 2 },
+		courseProgress: { currentUnit: 0, totalUnits: 2 },
 		units: [
 			{
 				id: "d0954Zlwx3",
 				unitId: '1',
 				title: "The Big Bang",
 				status: "complete",
-				progress: 100,
+				progress: 0,
 				sessions: [
 					{
 						id: "gwrh3Bo4H2",
 						sessionId: '1',
 						title: "What is the Big Bang?",
 						duration: "30min",
-						status: "complete",
+						status: "not-started",
 						activities: [
 							{
 								id: 'PpLBpsntrt',
@@ -74,7 +74,7 @@ export const mockCourses: Course[] = [
 				unitId: '2',
 				title: "Galaxies and Stars",
 				status: "in-progress",
-				progress: 50,
+				progress: 0,
 				sessions: [
 					{
 						id: "ii1uwIlvPx",
@@ -137,21 +137,21 @@ export const mockCourses: Course[] = [
 		id: '5DrrcSyAAw',
 		name: "Exploring the Solar System",
 		description: "Journey through the planets, moons, and other celestial objects in our solar system",
-		courseProgress: { currentUnit: 1, totalUnits: 2 },
+		courseProgress: { currentUnit: 0, totalUnits: 2 },
 		units: [
 			{
 				id: "9WSzTce1z2",
 				unitId: '1',
 				title: "Our Planetary Neighborhood",
 				status: "complete",
-				progress: 100,
+				progress: 0,
 				sessions: [
 					{
 						id: "kqSRtwk4B6",
 						sessionId: '1',
 						title: "Overview of the Solar System",
 						duration: "30min",
-						status: "complete",
+						status: "not-started",
 						activities: [
 							{
 								id: 'inXINS9ZSP',
@@ -206,7 +206,7 @@ export const mockCourses: Course[] = [
 						sessionId: '2',
 						title: "The Role of the Sun",
 						duration: "45min",
-						status: "complete",
+						status: "not-started",
 						activities: [
 							{
 								id: 'XEwweQCBVs',
