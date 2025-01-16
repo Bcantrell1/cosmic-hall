@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 export default async function SessionPage({ 
   params 
 }: { 
-  params: { courseId: string; sessionId: string } 
+  params: Promise<{ courseId: string; sessionId: string }>
 }) {
 	const {courseId, sessionId} = await params;
   const session = await getSession(courseId, sessionId);
