@@ -1,22 +1,22 @@
 import CourseHeader from "../ui/course/CourseHeader"
 
 export const metadata = {
-  title: 'Cosmic Hall | Course',
-  description: 'Course selection for the Cosmic Hall.',
+	title: 'Cosmic Hall | Course',
+	description: 'Course selection for the Cosmic Hall.',
 }
 
 export default async function CourseLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode
 }) {
 
-  return (
-    <>
+	return (
+		<>
 			<CourseHeader />
 			<div className="mx-auto container">
 				{children}
 			</div>
 		</>
-  )
+	)
 }

@@ -1,7 +1,7 @@
 import { ClerkLoaded, ClerkLoading, SignedIn, UserButton } from "@clerk/nextjs";
 import { UserCircle2Icon } from "lucide-react";
 
-export default function ClerkUserButton () {
+export default function ClerkUserButton() {
 
 	return (
 		<>

@@ -1,16 +1,16 @@
 export const metadata = {
-  title: 'Cosmic Hall | Authentication',
-  description: 'Authentication pages for Cosmic Hall.',
+	title: 'Cosmic Hall | Authentication',
+	description: 'Authentication pages for Cosmic Hall.',
 }
 export default async function AuthLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode
+	children: React.ReactNode
 }) {
 
-  return (
+	return (
 		<div className="flex flex-1 min-h-fit items-center justify-center py-24">
 			{children}
 		</div>
-  )
+	)
 }
