@@ -26,14 +26,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-			<ClerkProvider>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-			</ClerkProvider>
-    </html>
+		<ClerkProvider afterSignOutUrl={'/'}>
+			<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+				<body
+					className={`min-h-screen flex flex-col antialiased`}
+				>
+					<main className='flex-1'>{children}</main>
+					<footer className='p-2 bg-indigo-200'></footer>
+				</body>
+			</html>
+		</ClerkProvider>
   );
 }
