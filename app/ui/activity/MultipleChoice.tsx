@@ -65,12 +65,12 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
             {({ checked }) => (
               <label
                 className={`flex items-center gap-3 cursor-pointer ${
-                  checked ? 'text-blue-500' : 'text-gray-700'
+                  checked ? 'text-indigo-500' : 'text-gray-700'
                 }`}
               >
                 <div className="flex items-center justify-center">
                   {checked ? (
-                    <CheckCircle className="w-6 h-6 text-blue-500" />
+                    <CheckCircle className="w-6 h-6 text-indigo-500" />
                   ) : (
                     <Circle className="w-6 h-6 text-gray-300" />
                   )}

@@ -56,7 +56,7 @@ export default function CourseHeader() {
 							<div className="absolute right-0 mt-2 w-48 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 								<div className="px-1 py-1">{renderMenuItems(true)}</div>
 								<div className="px-1 py-1">
-									<div className="px-2 py-2">
+									<div className="px-2 float-end py-2">
 										<ClerkUserButton />
 									</div>
 								</div>

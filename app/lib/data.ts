@@ -13,6 +13,7 @@ export type Course = {
 
 export type Unit = {
   id: string;
+	unitId: string;
   title: string;
   status: 'not-started' | 'in-progress' | 'complete';
   progress: number;
@@ -21,6 +22,7 @@ export type Unit = {
 
 export type Session = {
   id: string;
+	sessionId: string;
   title: string;
   duration: string;
   status: 'not-started' | 'in-progress' | 'complete';
@@ -29,6 +31,7 @@ export type Session = {
 
 export type Activity = {
 	id: string;
+	activityId: string;
 	title: string;
 	duration: string;
 	status: 'not-started' | 'in-progress' | 'complete';
@@ -39,6 +42,7 @@ export type Activity = {
 
 export type Questions = {
 	id: string;
+	questionId: string;
 	question: string;
 	correct: string;
 	options: AnswerOption[]

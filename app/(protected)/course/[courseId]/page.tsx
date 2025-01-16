@@ -18,7 +18,7 @@ export default async function CoursePage({
 
   return (
     <div className="container mx-auto p-6">
-			<Button as={Link} href={`/courses`}>Back To Courses</Button>
+			<Button as={Link} href={`/courses`}>Back to Courses</Button>
       <CourseViewer {...course} />
     </div>
   );

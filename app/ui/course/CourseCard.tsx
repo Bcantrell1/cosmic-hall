@@ -10,7 +10,7 @@ export const CourseCard: React.FC<Course> = ({
 }) => { 
 	const {currentUnit, totalUnits} = courseProgress;
 	return(
-  <div className="w-[350px] p-6 bg-indigo-700 text-white rounded-lg shadow-lg flex flex-col">
+  <div className="w-[350px] p-6 bg-indigo-800 text-white rounded-lg shadow-lg flex flex-col">
 		<Image src={'https://placehold.co/350x200/png'} width={350} height={200} priority={true} alt="" />
     <div className="flex items-center gap-2 mb-4">
       <h3 className="text-xl font-semibold">{name}</h3>
