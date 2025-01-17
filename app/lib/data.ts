@@ -38,6 +38,7 @@ export type Activity = {
 	imgUrl?: string;
 	description?: string;
 	questions?: Questions[];
+	completedQuestions?: string[];
 }
 
 export type Questions = {
@@ -51,6 +52,36 @@ export type Questions = {
 export type AnswerOption = {
 	id: string;
 	text: string;
+}
+
+export type UserProgress = {
+  userId: string;
+  courses: UserCourseProgress[];
+}
+
+export type UserCourseProgress = {
+  courseId: string;
+  lastAccessedUnit: string;
+  lastAccessedSession: string;
+  units: UserUnitProgress[];
+}
+
+export type UserUnitProgress = {
+  unitId: string;
+  status: 'not-started' | 'in-progress' | 'complete';
+  sessions: UserSessionProgress[];
+}
+
+export type UserSessionProgress = {
+  sessionId: string;
+  status: 'not-started' | 'in-progress' | 'complete';
+  activities: UserActivityProgress[];
+}
+
+export type UserActivityProgress = {
+  activityId: string;
+  status: 'not-started' | 'in-progress' | 'complete';
+  completedQuestions: string[];
 }
 
 export async function getCourse(courseId: string): Promise<Course | undefined> {
