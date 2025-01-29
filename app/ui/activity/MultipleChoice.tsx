@@ -5,29 +5,27 @@ import React, { useState } from 'react';
 import QuestionFeeback from './QuestionFeedback';
 
 type MultipleChoiceQuestionProps = {
-	questionNumber: string;
+	questionNumber: number;
 	questionText: string;
 	options: AnswerOption[];
-	correctAnswer: string;
-	onAnswerSelected?: (isCorrect: boolean) => void;
 };
 
 const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 	questionNumber,
 	questionText,
 	options,
-	correctAnswer,
-	onAnswerSelected,
 }) => {
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 	const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
 	const handleOptionSelect = (optionId: string) => {
 		setSelectedAnswer(optionId);
-		const correct = optionId === correctAnswer;
-		setIsCorrect(correct);
-		if (onAnswerSelected) {
-			onAnswerSelected(correct);
+		const correctOption = options.find(option => option.correct === 1);
+		const correct = Boolean(correctOption?.id?.toString() === optionId?.toString());
+        setIsCorrect(correct);
+		if(correct) {
+			console.log("correct");
+			// TODO: update user progress
 		}
 	};
 
@@ -48,8 +46,10 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 				value={selectedAnswer}
 				onChange={(value) => handleOptionSelect(value as string)}
 				className="ml-8 space-y-2"
+				disabled={isCorrect !== null && isCorrect === true}
 			>
-				{options.map((option) => (
+				{
+					options.length > 0 && options.map((option) => (
 					<Radio key={option.id} value={option.id}>
 						{({ checked }) => (
 							<label
@@ -63,7 +63,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 										<Circle className="w-6 h-6 text-gray-300" />
 									)}
 								</div>
-								<span className="text-sm">{option.text}</span>
+								<span className="text-sm">{option.description}</span>
 							</label>
 						)}
 					</Radio>

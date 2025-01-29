@@ -1,0 +1,1 @@
+ALTER TABLE `sessions` ALTER COLUMN "duration" TO "duration" text;

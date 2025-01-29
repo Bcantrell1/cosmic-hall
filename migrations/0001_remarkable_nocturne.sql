@@ -1,0 +1,1 @@
+ALTER TABLE `units` ADD `status` text DEFAULT 'not-started' NOT NULL;

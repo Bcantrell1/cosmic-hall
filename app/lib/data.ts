@@ -1,57 +1,48 @@
-import { mockCourses } from "./dummy";
-
 export type Course = {
-  id: string;
-  name: string;
+  id: number;
+  title: string;
 	description: string;
-  courseProgress: {
-    currentUnit: number;
-    totalUnits: number;
-  };
-  units: Unit[];
+  courseProgress: number;
 };
+
 
 export type Unit = {
-  id: string;
-	unitId: string;
+  id: number;
   title: string;
-  status: 'not-started' | 'in-progress' | 'complete';
-  progress: number;
-  sessions: Session[];
+  status: string;
+  unitProgress: number;
 };
+
 
 export type Session = {
-  id: string;
-	sessionId: string;
+  id: number;
   title: string;
+  description: string;
   duration: string;
-  status: 'not-started' | 'in-progress' | 'complete';
-  activities: Activity[];
+  sessionProgress: number;
 };
 
+
 export type Activity = {
-	id: string;
-	activityId: string;
+	id: number;
 	title: string;
+	description: string;
 	duration: string;
-	status: 'not-started' | 'in-progress' | 'complete';
-	imgUrl?: string;
-	description?: string;
-	questions?: Questions[];
-	completedQuestions?: string[];
+	status: string;
 }
 
 export type Questions = {
-	id: string;
-	questionId: string;
+	id: number;
 	question: string;
-	correct: string;
-	options: AnswerOption[]
+  activity_id: number | null;
 }
 
 export type AnswerOption = {
-	id: string;
-	text: string;
+	id: number;
+  question_id: number | null;
+  correct: number;
+  option: string;
+  description: string;
 }
 
 export type UserProgress = {
@@ -61,8 +52,6 @@ export type UserProgress = {
 
 export type UserCourseProgress = {
   courseId: string;
-  lastAccessedUnit: string;
-  lastAccessedSession: string;
   units: UserUnitProgress[];
 }
 
@@ -82,23 +71,4 @@ export type UserActivityProgress = {
   activityId: string;
   status: 'not-started' | 'in-progress' | 'complete';
   completedQuestions: string[];
-}
-
-export async function getCourse(courseId: string): Promise<Course | undefined> {
-  return mockCourses.find(course => course.id === courseId);
-}
-
-export async function getSession(courseId: string, sessionId: string): Promise<Session | undefined> {
-  const course = await getCourse(courseId);
-  return course?.units
-    .flatMap(unit => unit.sessions)
-    .find(session => session.id === sessionId);
-}
-
-export async function getActivities(
-  courseId: string,
-  sessionId: string
-): Promise<Activity[] | undefined> {
-  const session = await getSession(courseId, sessionId);
-  return session?.activities;
 }
