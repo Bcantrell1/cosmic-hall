@@ -1,0 +1,1 @@
+ALTER TABLE `sessions` ADD `duration` text NOT NULL;
