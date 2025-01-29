@@ -48,7 +48,7 @@ export const mockCourses: Course[] = [
 								activityId: '2',
 								title: 'Key Evidence of the Big Bang',
 								duration: '10min',
-								status: 'in-progress',
+								status: 'not-started',
 								description: 'Scientists have discovered three crucial pieces of evidence that support the Big Bang theory. First, we observe the universe expanding through galactic redshift. Second, we find a precise ratio of light elements (particularly hydrogen and helium) throughout the universe that could only have been created in the extreme conditions of the Big Bang. Third, we detect cosmic microwave background radiation, which is essentially the afterglow of the Big Bang itself.',
 								questions: [
 									{
@@ -73,7 +73,7 @@ export const mockCourses: Course[] = [
 				id: "raBrDlRuAH",
 				unitId: '2',
 				title: "Galaxies and Stars",
-				status: "in-progress",
+				status: "not-started",
 				progress: 0,
 				sessions: [
 					{
@@ -81,7 +81,7 @@ export const mockCourses: Course[] = [
 						sessionId: '1',
 						title: "The Life Cycle of Stars",
 						duration: "60min",
-						status: "in-progress",
+						status: "not-started",
 						activities: [
 							{
 								id: 'qUbPCRPnvi',
@@ -110,7 +110,7 @@ export const mockCourses: Course[] = [
 								activityId: '2',
 								title: 'Supernovae and Black Hole Deaths',
 								duration: '10min',
-								status: 'in-progress',
+								status: 'not-started',
 								description: 'The final fate of a star depends crucially on its mass. Stars between 1.4 and 3 solar masses will end their lives as neutron stars, incredibly dense objects where a teaspoon of material would weigh billions of tons. However, stars with cores more massive than 3 solar masses experience such powerful gravitational collapse that they form black holes. When this happens, the gravitational pull becomes so strong that nothing, not even light, can escape from within a boundary called the event horizon.',
 								questions: [
 									{
@@ -181,7 +181,7 @@ export const mockCourses: Course[] = [
 								activityId: '2',
 								title: 'Understanding Orbital Mechanics',
 								duration: '10min',
-								status: 'in-progress',
+								status: 'not-started',
 								description: 'Kepler\'s three laws of planetary motion describe how planets orbit the Sun. The first law states that planets orbit in ellipses with the Sun at one focus. The second law explains that a line connecting a planet to the Sun sweeps out equal areas in equal times, meaning planets move faster when closer to the Sun. The third law establishes that the square of a planet\'s orbital period is proportional to the cube of its average distance from the Sun.',
 								questions: [
 									{
@@ -236,7 +236,7 @@ export const mockCourses: Course[] = [
 								activityId: '2',
 								title: 'Solar Flares and Their Impact',
 								duration: '10min',
-								status: 'in-progress',
+								status: 'not-started',
 								description: 'Solar flares are intense bursts of radiation from the Sun\'s surface caused by magnetic field disruptions. When these eruptions are accompanied by massive releases of solar material, they\'re called coronal mass ejections (CMEs). These solar events can have significant effects on Earth: they can damage satellites, pose radiation risks to astronauts, disrupt radio communications, and in severe cases, even affect power grids. However, they also create beautiful auroras when solar particles interact with Earth\'s magnetic field.',
 								questions: [
 									{
