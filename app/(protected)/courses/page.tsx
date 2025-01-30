@@ -1,4 +1,3 @@
-import { mockCourses } from "@/app/lib/dummy";
 import { CourseCard } from "@/app/ui/course/CourseCard";
 import CourseForm from "@/app/ui/course/CourseForm";
 import { db } from "@/db/index";
