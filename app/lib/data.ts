@@ -31,10 +31,10 @@ export type Questions = {
 
 export type AnswerOption = {
 	id: number;
-  question_id: number | null;
-  correct: number;
-  option: string;
-  description: string;
+	question_id: number | null;
+	correct: number;
+	option: string;
+	description: string;
 }
 
 export type UserCourse = {

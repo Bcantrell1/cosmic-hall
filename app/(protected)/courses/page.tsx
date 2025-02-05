@@ -1,6 +1,5 @@
 import { getCourseProgress } from "@/app/actions/getProgressAction";
 import { CourseCard } from "@/app/ui/course/CourseCard";
-import CourseForm from "@/app/ui/course/CourseForm";
 import { db } from "@/db/index";
 import { coursesTable } from "@/db/schema/courses";
 import { auth } from "@clerk/nextjs/server";
@@ -23,16 +22,11 @@ export default async function CoursesPage() {
 				{allCourses.map(async (course) => {
 					const progress = await getCourseProgress({ userId: userId, courseId: course.id });
 					return (
-						<CourseCard key={course.id} {...course} progress={progress} />
+						<CourseCard key={course.id} {...course} progress={progress} userId={userId} />
 					)
 				}
 			)}
 			</section>
-			{/* <br />
-			<hr />
-			<br />
-			<h2 className="text-xl">Add Course</h2>
-			<CourseForm /> */}
 		</div>
 	)
 }

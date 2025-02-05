@@ -10,7 +10,21 @@ export async function getOptions(questionId: number) {
     if (optionsCache[questionId]) {
         return optionsCache[questionId];
     }
-    const options = await db.select().from(optionsTable).where(eq(optionsTable.question_id, questionId));
-    optionsCache[questionId] = options;
-    return options;
+    try {
+        const options = await db.select().from(optionsTable).where(eq(optionsTable.question_id, questionId));
+        optionsCache[questionId] = options;
+        return {
+            success: true,
+            options
+        };
+        
+
+    } catch (error) {
+        console.error("Error getting options", error);
+        return {
+            success: false,
+            error: "Error getting options"
+        };
+    }
+
 }

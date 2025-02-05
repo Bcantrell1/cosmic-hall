@@ -1,8 +1,11 @@
 'use client'
+import { addUserSessionProgress, addUserUnitProgress } from "@/app/actions/addProgressAction";
+import { getSessionProgress, getUnitProgress } from "@/app/actions/getProgressAction";
 import { Course, Session, Unit, UserCourse, UserSession, UserUnit } from "@/app/lib/data";
 import { Button, Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 
 type CourseViewerProps = {
 	course: Course;
@@ -10,6 +13,7 @@ type CourseViewerProps = {
 	sessions: Session[];
 	unitProgress?: UserUnit[];
 	sessionProgress?: UserSession[];
+	userId: string;
 }
 
 export const CourseViewer: React.FC<CourseViewerProps> = ({
@@ -17,13 +21,35 @@ export const CourseViewer: React.FC<CourseViewerProps> = ({
 	course,
 	sessions,
 	unitProgress,
-	sessionProgress
+	sessionProgress,
+	userId
 }) => {
+	const router = useRouter();
 	const buttonText = (progress: number) => {
 		if (progress == 100) return "Review";
 		if (progress == 0) return "Start";
 		return "Continue";
+
 	}
+
+	const handleSessionStart = async (sessionId: number, unitId: number) => {
+		try {
+			const unitProgress = await getUnitProgress({ userId, unitId });
+			if (unitProgress?.progress == 0 || unitProgress?.progress == null) {
+				await addUserUnitProgress(userId, unitId, 1);
+				await addUserSessionProgress(userId, sessionId, 1);
+			} else {
+				const sessionProgress = await getSessionProgress({ userId, sessionId });
+				if (sessionProgress?.progress == 0) {
+					await addUserSessionProgress(userId, sessionId, 1);
+				}
+			}
+			router.push(`/course/${course.id}/session/${sessionId}`);
+		} catch (error) {
+			console.error("Error starting session", error);
+		}
+	}
+
 	return (
 	<div className="pt-3">
 		<div className="mb-6">
@@ -46,7 +72,7 @@ export const CourseViewer: React.FC<CourseViewerProps> = ({
 										<div className="w-full h-2 bg-gray-200 rounded-full mt-2">
 											<div
 												className="h-2 bg-green-500 rounded-full"
-												style={{ width: `${unitProgress?.[index].progress || 0}%` }}
+												style={{ width: `${unitProgress?.[index]?.progress ?? 0}%` }}
 											/>
 										</div>
 									</div>
@@ -64,10 +90,11 @@ export const CourseViewer: React.FC<CourseViewerProps> = ({
 										<span>Session {index + 1}: {session.title}</span>
 										<div className="flex items-center gap-4">
 											<span className="text-gray-600">Duration: {session.duration} mins</span>
-											<Button as={Link} href={`/course/${course.id}/session/${session.id}`} className="px-3 py-1 text-sm bg-blue-500 text-white rounded">
-												{buttonText(sessionProgress?.[index].progress || 0)}
+											<Button onClick={() => handleSessionStart(session.id, unit.id)} className="px-3 py-1 text-sm bg-blue-500 text-white rounded">
+												{buttonText(sessionProgress?.[index]?.progress ?? 0)}
 											</Button>
 										</div>
+
 									</div>
 								))}
 							</DisclosurePanel>

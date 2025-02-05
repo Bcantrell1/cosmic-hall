@@ -11,7 +11,6 @@ export default function CourseHeader() {
 
 	const menuItems = [
 		{ name: 'Courses', href: '/courses' },
-		// { name: 'References', href: '/references' },
 	];
 
 	const renderMenuItems = (isMobile: boolean) =>

@@ -1,8 +1,11 @@
+'use client'
 import { AnswerOption, UserAnswer } from '@/app/lib/data';
 import { Radio, RadioGroup } from '@headlessui/react';
 import { CheckCircle, Circle } from 'lucide-react';
 import React, { useState } from 'react';
 import QuestionFeeback from './QuestionFeedback';
+import { addUserAnswerProgress } from '@/app/actions/addProgressAction';
+import { updateUserAnswerProgress } from '@/app/actions/updateProgressAction';
 
 type MultipleChoiceQuestionProps = {
 	questionNumber: number;
@@ -27,24 +30,37 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 	}); 
 	const [isCorrect, setIsCorrect] = useState<boolean | null>(() => {
 		const existingAnswer = userProgress.find(answer => answer.questionId === questionId);
-		if (!existingAnswer) return null;
-		const correctOption = options.find(option => option.correct === 1);
-		return Boolean(correctOption?.id?.toString() === existingAnswer.selectedOptionId?.toString());
+		return existingAnswer?.isCorrect === 1 ? true : false;
 	}); 
 
 	const handleOptionSelect = async (optionId: string) => { 
-		setSelectedAnswer(optionId); const correctOption = options.find(option => option.correct === 1); 
+		setSelectedAnswer(optionId); 
+		const correctOption = options.find(option => option.correct === 1); 
 		const correct = Boolean(correctOption?.id?.toString() === optionId?.toString());
-        setIsCorrect(correct);
+		setIsCorrect(correct);
 		const optionIdNumber = Number(optionId);
-		if(correct) {
-			console.log("correct");
-			// TODO: update user progress
-			// try {
-			// 	await updateUserAnswerProgress(userId, questionId, optionIdNumber, 1);
-			// } catch (error) {
-			// 	console.error("Error updating user answer progress", error);
-			// }
+
+		const existingAnswer = userProgress.find(answer => answer.questionId === questionId);
+		
+		try {
+			if (existingAnswer) {
+				await updateUserAnswerProgress(
+					userId,
+					questionId,
+					optionIdNumber,
+					correct ? 1 : 0
+				);
+			} else {
+				await addUserAnswerProgress(
+					userId,
+					questionId,
+					optionIdNumber,
+					correct ? 1 : 0
+				);
+			}
+
+		} catch (error) {
+			console.error('Failed to save answer:', error);
 		}
 	};
 
@@ -54,7 +70,6 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 				<QuestionFeeback
 					selectedAnswer={selectedAnswer} 
 					isCorrect={isCorrect} 
-					userProgress={userProgress}
 				/>
 				<p className="text-sm">
 					<span className="font-medium">{questionNumber}. </span>
@@ -64,20 +79,23 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 
 			<RadioGroup
 				value={selectedAnswer}
-				onChange={(value) => handleOptionSelect(value as string)}
+				onChange={(value) => handleOptionSelect(value?.toString() ?? '')}
 				className="ml-8 space-y-2"
-				disabled={isCorrect !== null && isCorrect === true} 
+				disabled={isCorrect !== null && isCorrect === true}
 			>
-				{
-					options.length > 0 && options.map((option) => (
-					<Radio key={option.id} value={option.id}>
+				{options.length > 0 && options.map((option) => (
+					<Radio 
+						key={option.id} 
+						value={option.id.toString()}
+					>
 						{({ checked }) => (
 							<label
-								className={`flex items-center gap-3 cursor-pointer ${checked || userProgress.find(answer => answer.questionId === questionId)?.selectedOptionId?.toString() === option.id?.toString() ? 'text-indigo-500' : 'text-gray-700'
-									}`}
+								className={`flex items-center gap-3 cursor-pointer ${
+									checked ? 'text-indigo-500' : 'text-gray-700'
+								}`}
 							>
 								<div className="flex items-center justify-center">
-									{checked || userProgress.find(answer => answer.questionId === questionId)?.selectedOptionId?.toString() === option.id?.toString() ? (
+									{checked ? (
 										<CheckCircle className="w-6 h-6 text-indigo-500" />
 									) : (
 										<Circle className="w-6 h-6 text-gray-300" />

@@ -1,8 +1,8 @@
-import { UserAnswer } from '@/app/lib/data';
 import { CheckCircle, X } from 'lucide-react';
 import React from 'react';
 
-const QuestionFeeback = ({ isCorrect, selectedAnswer, userProgress }: {isCorrect: boolean | null, selectedAnswer: string|null|undefined, userProgress: UserAnswer[]}) => {
+const QuestionFeeback = ({ isCorrect, selectedAnswer }: {isCorrect: boolean | null, selectedAnswer: string|null|undefined }) => {
+  if (!selectedAnswer) return null;
 
   return (
     <div className="flex-shrink-0 mt-1">

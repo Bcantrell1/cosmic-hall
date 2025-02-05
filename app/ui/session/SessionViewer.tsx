@@ -31,19 +31,38 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 		setIsLoading(true);
 		if(activities.length > 0) {
 			const fetchActivityQuestions = async () => {
-				const questions = await getQuestions(activities[selectedIndex].id);
-				setQuestions(questions);
-				setCurrentQuestion(questions[0]);
-				if(questions[0]) {
-					const options = await getOptions(questions[0].id);
-					setOptions(options);
+				const questionsResponse = await getQuestions(activities[selectedIndex].id);
+				if ('success' in questionsResponse && questionsResponse.success) {
+					setQuestions(questionsResponse.questions || []);
+					setCurrentQuestion(questionsResponse.questions?.[0] || null);
+				} else if ('error' in questionsResponse) {
+					console.error("Failed to fetch questions:", questionsResponse.error);
+					setQuestions([]);
+					setCurrentQuestion(null);
 				}
-				const userProgress = await getUserAnswerProgressByActivityId({ userId, activityId: activities[selectedIndex].id });
-				setUserProgress(userProgress);
+				if(questions[0]) {
+					const optionsResponse = await getOptions(questions[0].id);
+					if ('success' in optionsResponse && optionsResponse.success) {
+						setOptions(optionsResponse.options || []);
+					} else if ('error' in optionsResponse) {
+						console.error("Failed to fetch options:", optionsResponse.error);
+						setOptions([]);
+					}
+				}
+
+				const userProgress = await getUserAnswerProgressByActivityId({ 
+					userId, 
+					activityId: activities[selectedIndex].id 
+				});
+				if(userProgress) {
+					setUserProgress(userProgress);
+				}
+
 				setIsLoading(false);
 			};
 			fetchActivityQuestions();
 		} else {
+			console.log("No activities found");
 			setIsLoading(false);
 		}
 	}, [selectedIndex, activities]);
@@ -86,7 +105,6 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 							<h1 className="text-xl font-semibold">{activities[selectedIndex].title}</h1>
 							<div className="space-x-4">
 								<span className="text-gray-600"><span className="hidden md:inline-block">Duration:</span> {activities[selectedIndex].duration}min</span>
-								{/* todo: get user session progress */}
 								<span className="text-gray-600"><span className="hidden md:inline-block">Status:</span> {userProgress.length > 0 ? "Completed" : "In Progress"}</span>
 							</div>
 						</div>
@@ -96,16 +114,16 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 							<MultipleChoiceQuestion userId={userId} questionId={currentQuestion.id} key={currentQuestion.id} questionNumber={currentQuestion.id} questionText={currentQuestion.question} options={options} userProgress={userProgress} />
 						)}
 						<div className="flex justify-end gap-2">
-						{
-							selectedIndex < activities.length - 1 && (
-								<Button onClick={handleNext}>Next</Button>
-							)
-						}
-						{
-							selectedIndex > 0 && (
-								<Button onClick={handlePrevious}>Previous</Button>
-							)
-						}
+							{
+								selectedIndex < activities.length - 1 && (
+									<Button onClick={handleNext}>Next</Button>
+								)
+							}
+							{
+								selectedIndex > 0 && (
+									<Button onClick={handlePrevious}>Previous</Button>
+								)
+							}
 						</div>
 					</div>
 				) : (
