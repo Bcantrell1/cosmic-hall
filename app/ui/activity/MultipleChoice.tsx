@@ -87,7 +87,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 				className="ml-8 space-y-2"
 				disabled={isCorrect !== null && isCorrect === true}
 			>
-				{options.length > 0 && options.map((option, index) => (
+				{options.length > 0 && options.map((option) => (
 					<Radio 
 						key={option.id} 
 						value={option.id.toString()}
