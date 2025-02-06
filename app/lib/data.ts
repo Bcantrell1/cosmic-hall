@@ -14,6 +14,7 @@ export type Session = {
   title: string;
   description: string;
   duration: string;
+  unit_id: number | null;
 };
 
 export type Activity = {

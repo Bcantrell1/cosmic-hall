@@ -87,11 +87,12 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 				className="ml-8 space-y-2"
 				disabled={isCorrect !== null && isCorrect === true}
 			>
-				{options.length > 0 && options.map((option) => (
+				{options.length > 0 && options.map((option, index) => (
 					<Radio 
 						key={option.id} 
 						value={option.id.toString()}
 					>
+
 						{({ checked }) => (
 							<label
 								className={`flex items-center gap-3 cursor-pointer ${
