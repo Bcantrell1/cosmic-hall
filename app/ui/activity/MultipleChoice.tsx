@@ -1,11 +1,12 @@
 'use client'
+import { addUserAnswerProgress } from '@/app/actions/addProgressAction';
+import { getUserAnswerProgressByActivityId } from '@/app/actions/getProgressAction';
+import { updateUserAnswerProgress } from '@/app/actions/updateProgressAction';
 import { AnswerOption, UserAnswer } from '@/app/lib/data';
 import { Radio, RadioGroup } from '@headlessui/react';
 import { CheckCircle, Circle } from 'lucide-react';
 import React, { useState } from 'react';
-import QuestionFeeback from './QuestionFeedback';
-import { addUserAnswerProgress } from '@/app/actions/addProgressAction';
-import { updateUserAnswerProgress } from '@/app/actions/updateProgressAction';
+import QuestionFeedback from './QuestionFeedback';
 
 type MultipleChoiceQuestionProps = {
 	questionNumber: number;
@@ -14,6 +15,7 @@ type MultipleChoiceQuestionProps = {
 	userId: string;
 	questionId: number;
 	userProgress: UserAnswer[];
+	activityId: number;
 };
 
 const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
@@ -22,7 +24,8 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 	options,
 	userId,
 	questionId, 
-	userProgress 
+	userProgress,
+	activityId
 }) => { 
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(() => {
 		const existingAnswer = userProgress.find(answer => answer.questionId === questionId);
@@ -40,7 +43,8 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 		setIsCorrect(correct);
 		const optionIdNumber = Number(optionId);
 
-		const existingAnswer = userProgress.find(answer => answer.questionId === questionId);
+		const currentUserProgress = await getUserAnswerProgressByActivityId({userId, activityId});
+		const existingAnswer = currentUserProgress?.find(answer => answer.questionId === questionId);
 		
 		try {
 			if (existingAnswer) {
@@ -67,7 +71,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 	return (
 		<>
 			<div className="flex items-start gap-2 mb-4">
-				<QuestionFeeback
+				<QuestionFeedback
 					selectedAnswer={selectedAnswer} 
 					isCorrect={isCorrect} 
 				/>
