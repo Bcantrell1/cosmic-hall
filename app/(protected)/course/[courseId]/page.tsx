@@ -17,7 +17,7 @@ export default async function CoursePage({
 	const { courseId } = await params;
 	const course = await db.select().from(coursesTable).where(eq(coursesTable.id, Number(courseId)));
 	const units = await db.select().from(unitsTable).where(eq(unitsTable.course_id, Number(courseId)));
-	const sessions = await db.select().from(sessionsTable).where(eq(sessionsTable.unit_id, Number(courseId)));
+	const sessions = await db.select().from(sessionsTable);
 
 	if (!course && !units && !sessions) {
 		notFound();

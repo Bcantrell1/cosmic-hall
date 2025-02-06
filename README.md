@@ -68,12 +68,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## TODO List 📝
 
-- [ ] Add database and ORM for progress tracking
+- [x] Add database and ORM for progress tracking
 - [ ] Implement course search and filtering
 - [ ] Add course completion certificates
 - [ ] Add support for different content types (video, quizzes, assessments)
 - [ ] Create admin dashboard for statistics
-- [ ] Implement user feedback system
+- [x] Implement user feedback system
 - [ ] Host on Google Cloud Platform instead of vercel
 
 ## Contribute to my project 🤝
