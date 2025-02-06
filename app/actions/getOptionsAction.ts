@@ -3,8 +3,9 @@
 import { db } from "@/db";
 import { optionsTable } from "@/db/schema/courses";
 import { eq } from "drizzle-orm";
+import { AnswerOption } from "../lib/data";
 
-const optionsCache: Record<number, any[]> = {};
+const optionsCache: Record<number, AnswerOption[]> = {};
 
 export async function getOptions(questionId: number) {
     if (optionsCache[questionId]) {

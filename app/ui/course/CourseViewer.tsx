@@ -1,7 +1,7 @@
 'use client'
 import { addUserSessionProgress, addUserUnitProgress } from "@/app/actions/addProgressAction";
 import { getSessionProgress, getUnitProgress } from "@/app/actions/getProgressAction";
-import { Course, Session, Unit, UserCourse, UserSession, UserUnit } from "@/app/lib/data";
+import { Course, Session, Unit, UserSession, UserUnit } from "@/app/lib/data";
 import { Button, Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";

@@ -3,8 +3,9 @@
 import { db } from "@/db";
 import { questionsTable } from "@/db/schema/courses";
 import { eq } from "drizzle-orm";
+import { Questions } from "../lib/data";
 
-const questionsCache: Record<number, any[]> = {};
+const questionsCache: Record<number, Questions[]> = {};
 
 export async function getQuestions(activityId: number) {
     if (questionsCache[activityId]) {

@@ -1,12 +1,12 @@
 'use client'
+import { getOptions } from "@/app/actions/getOptionsAction";
+import { getUserAnswerProgressByActivityId } from "@/app/actions/getProgressAction";
+import { getQuestions } from "@/app/actions/getQuestionsAction";
 import { Activity, AnswerOption, Questions, Session, UserAnswer } from "@/app/lib/data";
+import { Button } from "@headlessui/react";
 import { useEffect, useState } from "react";
 import MultipleChoiceQuestion from "../activity/MultipleChoice";
 import Sidebar from "./SessionSidebar";
-import { Button } from "@headlessui/react";
-import { getQuestions } from "@/app/actions/getQuestionsAction";
-import { getOptions } from "@/app/actions/getOptionsAction";
-import { getUserAnswerProgressByActivityId } from "@/app/actions/getProgressAction";
 
 type SessionViewerProps = {
 	session: Session;
@@ -65,7 +65,7 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 			console.log("No activities found");
 			setIsLoading(false);
 		}
-	}, [selectedIndex, activities]);
+	}, [selectedIndex, activities, questions, userId]);
 
 
 	const handleNext = () => {
