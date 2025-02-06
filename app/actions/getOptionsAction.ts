@@ -3,8 +3,29 @@
 import { db } from "@/db";
 import { optionsTable } from "@/db/schema/courses";
 import { eq } from "drizzle-orm";
+import { AnswerOption } from "../lib/data";
+
+const optionsCache: Record<number, AnswerOption[]> = {};
 
 export async function getOptions(questionId: number) {
-    const options = await db.select().from(optionsTable).where(eq(optionsTable.question_id, questionId));
-    return options;
+    if (optionsCache[questionId]) {
+        return optionsCache[questionId];
+    }
+    try {
+        const options = await db.select().from(optionsTable).where(eq(optionsTable.question_id, questionId));
+        optionsCache[questionId] = options;
+        return {
+            success: true,
+            options
+        };
+        
+
+    } catch (error) {
+        console.error("Error getting options", error);
+        return {
+            success: false,
+            error: "Error getting options"
+        };
+    }
+
 }

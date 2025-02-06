@@ -1,20 +1,23 @@
 'use client'
-import { Activity, AnswerOption, Questions, Session } from "@/app/lib/data";
+import { getOptions } from "@/app/actions/getOptionsAction";
+import { getUserAnswerProgressByActivityId } from "@/app/actions/getProgressAction";
+import { getQuestions } from "@/app/actions/getQuestionsAction";
+import { Activity, AnswerOption, Questions, Session, UserAnswer } from "@/app/lib/data";
+import { Button } from "@headlessui/react";
 import { useEffect, useState } from "react";
 import MultipleChoiceQuestion from "../activity/MultipleChoice";
 import Sidebar from "./SessionSidebar";
-import { Button } from "@headlessui/react";
-import { getQuestions } from "@/app/actions/getQuestionsAction";
-import { getOptions } from "@/app/actions/getOptionsAction";
 
 type SessionViewerProps = {
 	session: Session;
 	activities: Activity[];
+	userId: string;
 }
 
 export const SessionViewer: React.FC<SessionViewerProps> = ({
 	session,
-	activities
+	activities,
+	userId
 }) => {
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
 	const { id, title } = session;
@@ -22,25 +25,47 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 	const [options, setOptions] = useState<AnswerOption[]>([]);
 	const [currentQuestion, setCurrentQuestion] = useState<Questions | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [userProgress, setUserProgress] = useState<UserAnswer[]>([]);
 
 	useEffect(() => {
 		setIsLoading(true);
 		if(activities.length > 0) {
 			const fetchActivityQuestions = async () => {
-				const questions = await getQuestions(activities[selectedIndex].id);
-				setQuestions(questions);
-				setCurrentQuestion(questions[0]);
-				if(questions[0]) {
-					const options = await getOptions(questions[0].id);
-					setOptions(options);
+				const questionsResponse = await getQuestions(activities[selectedIndex].id);
+				if ('success' in questionsResponse && questionsResponse.success) {
+					setQuestions(questionsResponse.questions || []);
+					setCurrentQuestion(questionsResponse.questions?.[0] || null);
+				} else if ('error' in questionsResponse) {
+					console.error("Failed to fetch questions:", questionsResponse.error);
+					setQuestions([]);
+					setCurrentQuestion(null);
 				}
+				if(questions[0]) {
+					const optionsResponse = await getOptions(questions[0].id);
+					if ('success' in optionsResponse && optionsResponse.success) {
+						setOptions(optionsResponse.options || []);
+					} else if ('error' in optionsResponse) {
+						console.error("Failed to fetch options:", optionsResponse.error);
+						setOptions([]);
+					}
+				}
+
+				const userProgress = await getUserAnswerProgressByActivityId({ 
+					userId, 
+					activityId: activities[selectedIndex].id 
+				});
+				if(userProgress) {
+					setUserProgress(userProgress);
+				}
+
 				setIsLoading(false);
 			};
 			fetchActivityQuestions();
 		} else {
+			console.log("No activities found");
 			setIsLoading(false);
 		}
-	}, [selectedIndex, activities]);
+	}, [selectedIndex, activities, questions, userId]);
 
 
 	const handleNext = () => {
@@ -79,26 +104,26 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 						<div className="flex justify-between items-center">
 							<h1 className="text-xl font-semibold">{activities[selectedIndex].title}</h1>
 							<div className="space-x-4">
-								<span className="text-gray-600"><span className="hidden md:inline-block">Duration:</span> {activities[selectedIndex].duration}</span>
-								<span className="text-gray-600"><span className="hidden md:inline-block">Status:</span> {activities[selectedIndex].status}</span>
+								<span className="text-gray-600"><span className="hidden md:inline-block">Duration:</span> {activities[selectedIndex].duration}min</span>
+								<span className="text-gray-600"><span className="hidden md:inline-block">Status:</span> {userProgress.length > 0 ? "Completed" : "In Progress"}</span>
 							</div>
 						</div>
 						{activities[selectedIndex]?.description}
 
-						{currentQuestion && (
-							<MultipleChoiceQuestion key={currentQuestion.id} questionNumber={currentQuestion.id} questionText={currentQuestion.question} options={options} />
+						{currentQuestion && userId && (
+							<MultipleChoiceQuestion userId={userId} questionId={currentQuestion.id} key={currentQuestion.id} questionNumber={currentQuestion.id} questionText={currentQuestion.question} options={options} userProgress={userProgress} />
 						)}
 						<div className="flex justify-end gap-2">
-						{
-							selectedIndex < activities.length - 1 && (
-								<Button onClick={handleNext}>Next</Button>
-							)
-						}
-						{
-							selectedIndex > 0 && (
-								<Button onClick={handlePrevious}>Previous</Button>
-							)
-						}
+							{
+								selectedIndex < activities.length - 1 && (
+									<Button onClick={handleNext}>Next</Button>
+								)
+							}
+							{
+								selectedIndex > 0 && (
+									<Button onClick={handlePrevious}>Previous</Button>
+								)
+							}
 						</div>
 					</div>
 				) : (

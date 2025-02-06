@@ -1,7 +1,7 @@
 import { CheckCircle, X } from 'lucide-react';
 import React from 'react';
 
-const QuestionFeeback = ({ isCorrect, selectedAnswer }: {isCorrect: boolean | null, selectedAnswer: string|null}) => {
+const QuestionFeeback = ({ isCorrect, selectedAnswer }: {isCorrect: boolean | null, selectedAnswer: string|null|undefined }) => {
   if (!selectedAnswer) return null;
 
   return (

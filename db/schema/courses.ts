@@ -5,7 +5,6 @@ export const coursesTable = sqliteTable("courses", {
     id: int().primaryKey({ autoIncrement: true }),
     title: text().notNull(),
     description: text().notNull(),
-    courseProgress: int().notNull().default(0),
     createdAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
     updatedAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
 });
@@ -16,8 +15,6 @@ export const unitsTable = sqliteTable("units", {
     description: text().notNull(),
     createdAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
     updatedAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
-    unitProgress: int().notNull().default(0),
-    status: text().notNull().default("not-started"),
     course_id: int().references(() => coursesTable.id),
 });
 
@@ -27,7 +24,6 @@ export const sessionsTable = sqliteTable("sessions", {
     description: text().notNull(),
     createdAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
     updatedAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
-    sessionProgress: int().notNull().default(0),
     duration: text().notNull().default("00"),
     unit_id: int().references(() => unitsTable.id),
 });
@@ -36,7 +32,6 @@ export const activitiesTable = sqliteTable("activities", {
     id: int().primaryKey({ autoIncrement: true }),
     title: text().notNull(),
     description: text().notNull(),
-    status: text().notNull().default("not-started"),
     duration: text().notNull(),
     createdAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
     updatedAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),

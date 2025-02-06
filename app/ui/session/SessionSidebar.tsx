@@ -19,7 +19,6 @@ const Sidebar = ({ activities, selectedIndex, onChange }: SidebarProps) => {
 
 	const handleTabChange = (index: number) => {
     onChange(index);
-		// Close the sidebar on mobile when activity selected
     if (window.innerWidth < 1024) {
       setIsSidebarOpen(false);
     }
