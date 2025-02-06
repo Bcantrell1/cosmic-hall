@@ -29,7 +29,7 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 
 	useEffect(() => {
 		setIsLoading(true);
-		if(activities.length > 0) {
+		if (activities.length > 0) {
 			const fetchActivityQuestions = async () => {
 				const questionsResponse = await getQuestions(activities[selectedIndex].id);
 				if ('success' in questionsResponse && questionsResponse.success) {
@@ -40,24 +40,15 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 					setQuestions([]);
 					setCurrentQuestion(null);
 				}
-				if(questions[0]) {
-					const optionsResponse = await getOptions(questions[0].id);
-					if ('success' in optionsResponse && optionsResponse.success) {
-						setOptions(optionsResponse.options || []);
-					} else if ('error' in optionsResponse) {
-						console.error("Failed to fetch options:", optionsResponse.error);
-						setOptions([]);
-					}
-				}
-
+	
 				const userProgress = await getUserAnswerProgressByActivityId({ 
 					userId, 
 					activityId: activities[selectedIndex].id 
 				});
-				if(userProgress) {
+				if (userProgress) {
 					setUserProgress(userProgress);
 				}
-
+	
 				setIsLoading(false);
 			};
 			fetchActivityQuestions();
@@ -65,7 +56,23 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 			console.log("No activities found");
 			setIsLoading(false);
 		}
-	}, [selectedIndex, activities, questions, userId]);
+	}, [selectedIndex, activities, userId]);
+	
+	useEffect(() => {
+		if (currentQuestion) {
+			const fetchOptions = async () => {
+				const optionsResponse = await getOptions(currentQuestion.id);
+				if ('success' in optionsResponse && optionsResponse.success) {
+					setOptions(optionsResponse.options || []);
+				} else if ('error' in optionsResponse) {
+					console.error("Failed to fetch options:", optionsResponse.error);
+					setOptions([]);
+				}
+			};
+			fetchOptions();
+		}
+	}, [currentQuestion]);
+	
 
 
 	const handleNext = () => {
@@ -111,7 +118,7 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 						{activities[selectedIndex]?.description}
 
 						{currentQuestion && userId && (
-							<MultipleChoiceQuestion userId={userId} questionId={currentQuestion.id} key={currentQuestion.id} questionNumber={currentQuestion.id} questionText={currentQuestion.question} options={options} userProgress={userProgress} />
+							<MultipleChoiceQuestion userId={userId} questionId={currentQuestion.id} key={currentQuestion.id} questionNumber={currentQuestion.id} questionText={currentQuestion.question} options={options} userProgress={userProgress} activityId={activities[selectedIndex]?.id} />
 						)}
 						<div className="flex justify-end gap-2">
 							{
