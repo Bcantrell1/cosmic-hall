@@ -14,26 +14,45 @@ export default async function CoursePage({
 	params: Promise<{ courseId: string }>
 }) {
 	const userId = (await auth()).userId;
-	const { courseId } = await params;
-	const course = await db.select().from(coursesTable).where(eq(coursesTable.id, Number(courseId)));
-	const units = await db.select().from(unitsTable).where(eq(unitsTable.course_id, Number(courseId)));
-	const sessions = await db.select().from(sessionsTable);
 
-	if (!course && !units && !sessions) {
-		notFound();
-	}
-	
 	if (!userId) {
-		notFound();
-	}
+        notFound();
+    }
 
-	const unitProgress = await db.select().from(userUnitsTable).where(eq(userUnitsTable.userId, userId));
-	const sessionProgress = await db.select().from(userSessionsTable).where(eq(userSessionsTable.userId, userId));
+	const { courseId } = await params;
+
+	const [course] = await db
+    	.select()
+    	.from(coursesTable)
+        .where(eq(coursesTable.id, Number(courseId)));
+
+	if (!course) {
+        notFound();
+    }
+
+	const units = await db
+		.select()
+		.from(unitsTable)
+		.where(eq(unitsTable.course_id, Number(courseId)));
+	
+	const sessions = await db
+		.select()
+		.from(sessionsTable);
+
+	const unitProgress = await db
+		.select()
+		.from(userUnitsTable)
+		.where(eq(userUnitsTable.userId, userId));
+	
+	const sessionProgress = await db
+		.select()
+		.from(userSessionsTable)
+		.where(eq(userSessionsTable.userId, userId));
 
 	return (
 		<div className="container mx-auto p-6">
 			<Button as={Link} href={`/courses`}>Back to Courses</Button>
-			<CourseViewer course={course[0]} userId={userId} units={units} sessions={sessions} unitProgress={unitProgress} sessionProgress={sessionProgress} />
+			<CourseViewer course={course} userId={userId} units={units} sessions={sessions} unitProgress={unitProgress} sessionProgress={sessionProgress} />
 		</div>
 	);
 }

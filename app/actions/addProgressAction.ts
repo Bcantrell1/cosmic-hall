@@ -3,11 +3,13 @@
 import { db } from "@/db";
 import { userAnswersTable, userCoursesTable, userSessionsTable, userUnitsTable } from "@/db/schema/userProgress";
 
-export async function addUserAnswerProgress(userId: string, questionId: number, optionId: number, isCorrect: number) {
+export async function addUserAnswerProgress(userId: string, questionId: number, unitId: number, attemptNumber: number, optionId: number, isCorrect: number) {
     try {
         await db.insert(userAnswersTable).values({ 
             userId, 
             questionId, 
+            unitId,
+            attemptNumber,
             selectedOptionId: optionId, 
             isCorrect 
         });
@@ -16,8 +18,10 @@ export async function addUserAnswerProgress(userId: string, questionId: number, 
             success: true,
             userId,
             questionId,
+            unitId,
             selectedOptionId: optionId,
             isCorrect
+
         };
     } catch (error) {
         console.error("Error adding user answer progress", error);

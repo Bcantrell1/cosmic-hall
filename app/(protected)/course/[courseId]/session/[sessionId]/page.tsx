@@ -10,26 +10,34 @@ import { auth } from '@clerk/nextjs/server';
 export default async function SessionPage({
 	params
 }: {
-	params: Promise<{ courseId: string; sessionId: string }>
+	params: Promise<{ courseId: string; sessionId: string; }>
 }) {
-	const { courseId, sessionId } = await params;
-	const session = await db.select().from(sessionsTable).where(eq(sessionsTable.id, Number(sessionId)));
-	const activities = await db.select().from(activitiesTable).where(eq(activitiesTable.session_id, Number(sessionId)));
-	const { userId } = await auth();
-
-	if (!session && !activities) {
-		notFound();
-	}
+	const userId = (await auth()).userId;
 
 	if (!userId) {
 		notFound();
 	}
 
+	const { courseId, sessionId } = await params;
+	const [session] = await db
+        .select()
+        .from(sessionsTable)
+        .where(eq(sessionsTable.id, Number(sessionId)));
+
+	if (!session) {
+        notFound();
+    }
+
+	const activities = await db
+        .select()
+        .from(activitiesTable)
+        .where(eq(activitiesTable.session_id, Number(sessionId)));
 
 	return (
 		<div className="container mx-auto p-6">
 			<Button as={Link} href={`/course/${courseId}`}>Back to Course</Button>
-			<SessionViewer session={session[0]} activities={activities} userId={userId} />
+			<SessionViewer session={session} activities={activities} userId={userId} />
 		</div>
+
 	);
 }

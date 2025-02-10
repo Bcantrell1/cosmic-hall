@@ -44,6 +44,7 @@ export const questionsTable = sqliteTable("questions", {
     createdAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
     updatedAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
     activity_id: int().references(() => activitiesTable.id),
+    unit_id: int().references(() => unitsTable.id),
 });
 
 export const optionsTable = sqliteTable("options", {

@@ -27,7 +27,8 @@ export type Activity = {
 export type Questions = {
 	id: number;
 	question: string;
-  activity_id: number | null;
+	activity_id: number | null;
+	unit_id: number | null;
 }
 
 export type AnswerOption = {
@@ -65,4 +66,5 @@ export type UserAnswer = {
 	questionId: number | null;
 	selectedOptionId: number | null;
 	isCorrect: number;
+	attemptNumber: number;
 }
