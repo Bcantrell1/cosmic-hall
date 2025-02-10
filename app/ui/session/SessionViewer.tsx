@@ -5,8 +5,10 @@ import { getQuestions } from "@/app/actions/getQuestionsAction";
 import { Activity, AnswerOption, Questions, Session, UserAnswer } from "@/app/lib/data";
 import { Button } from "@headlessui/react";
 import { useEffect, useState } from "react";
-import MultipleChoiceQuestion from "../activity/MultipleChoice";
 import Sidebar from "./SessionSidebar";
+import { ActivityHeader } from "./components/ActivityHeader";
+import { NavigationControls } from "./components/NavigationControls";
+import { QuestionViewer } from "./components/QuestionViewer";
 
 type SessionViewerProps = {
 	session: Session;
@@ -17,15 +19,17 @@ type SessionViewerProps = {
 export const SessionViewer: React.FC<SessionViewerProps> = ({
 	session,
 	activities,
-	userId
+	userId,
 }) => {
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
 	const { id, title } = session;
 	const [questions, setQuestions] = useState<Questions[]>([]);
 	const [options, setOptions] = useState<AnswerOption[]>([]);
 	const [currentQuestion, setCurrentQuestion] = useState<Questions | null>(null);
+
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [userProgress, setUserProgress] = useState<UserAnswer[]>([]);
+	const [isLoadingOptions, setIsLoadingOptions] = useState<boolean>(false);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -60,13 +64,16 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 	
 	useEffect(() => {
 		if (currentQuestion) {
+			setIsLoadingOptions(true);
 			const fetchOptions = async () => {
 				const optionsResponse = await getOptions(currentQuestion.id);
 				if ('success' in optionsResponse && optionsResponse.success) {
 					setOptions(optionsResponse.options || []);
+					setIsLoadingOptions(false);
 				} else if ('error' in optionsResponse) {
 					console.error("Failed to fetch options:", optionsResponse.error);
 					setOptions([]);
+					setIsLoadingOptions(false);
 				}
 			};
 			fetchOptions();
@@ -81,6 +88,23 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 
 	const handlePrevious = () => {
 		setSelectedIndex(selectedIndex - 1);
+	}
+
+	if (isLoading) {
+		return (
+			<div className="flex justify-center items-center h-screen">
+				<div className="text-xl font-semibold">Loading...</div>
+			</div>
+		);
+	}
+
+	if (questions.length === 0) {
+		return (
+			<div className="flex flex-col justify-center items-center h-screen">
+				<div className="text-xl font-semibold">No questions found</div>
+				<Button onClick={handlePrevious}>Previous</Button>
+			</div>
+		);
 	}
 
 	return (
@@ -102,44 +126,35 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 						<div>{activities.length}</div>
 					</div>
 				</div>
-				{isLoading ? (
-					<div className="flex justify-center items-center h-screen">
-						<div className="text-xl font-semibold">Loading...</div>
-					</div>
-				) : questions.length > 0 ? (
-					<div className="bg-white p-4 rounded-lg">
-						<div className="flex justify-between items-center">
-							<h1 className="text-xl font-semibold">{activities[selectedIndex].title}</h1>
-							<div className="space-x-4">
-								<span className="text-gray-600"><span className="hidden md:inline-block">Duration:</span> {activities[selectedIndex].duration}min</span>
-								<span className="text-gray-600"><span className="hidden md:inline-block">Status:</span> {userProgress.length > 0 ? "Completed" : "In Progress"}</span>
-							</div>
-						</div>
-						{activities[selectedIndex]?.description}
+				
+				<div className="bg-white p-4 rounded-lg">
+					<ActivityHeader
+						title={activities[selectedIndex].title}
+						duration={Number(activities[selectedIndex].duration)}
+						userProgress={userProgress}
+					/>
+					
+					{activities[selectedIndex]?.description}
 
-						{currentQuestion && userId && (
-							<MultipleChoiceQuestion userId={userId} questionId={currentQuestion.id} key={currentQuestion.id} questionNumber={currentQuestion.id} questionText={currentQuestion.question} options={options} userProgress={userProgress} activityId={activities[selectedIndex]?.id} />
-						)}
-						<div className="flex justify-end gap-2">
-							{
-								selectedIndex < activities.length - 1 && (
-									<Button onClick={handleNext}>Next</Button>
-								)
-							}
-							{
-								selectedIndex > 0 && (
-									<Button onClick={handlePrevious}>Previous</Button>
-								)
-							}
-						</div>
-					</div>
-				) : (
-					<div className="flex flex-col justify-center items-center h-screen">
-						<div className="text-xl font-semibold">No questions found</div>
-						<Button onClick={handlePrevious}>Previous</Button>
-					</div>
-				)}
+					{currentQuestion && userId && !isLoadingOptions && (
+						<QuestionViewer
+							userId={userId}
+							currentQuestion={currentQuestion}
+							options={options}
+							userProgress={userProgress}
+							activityId={activities[selectedIndex]?.id.toString()}
+							unitId={questions[0]?.unit_id?.toString() || ''}
+						/>
+					)}
+
+					<NavigationControls
+						onNext={handleNext}
+						onPrevious={handlePrevious}
+						showNext={selectedIndex < activities.length - 1}
+						showPrevious={selectedIndex > 0}
+					/>
+				</div>
 			</section>
 		</div>
-	)
+	);
 }

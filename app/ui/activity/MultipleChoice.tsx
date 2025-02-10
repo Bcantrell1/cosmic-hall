@@ -1,7 +1,7 @@
 'use client'
 import { addUserAnswerProgress } from '@/app/actions/addProgressAction';
 import { getUserAnswerProgressByActivityId } from '@/app/actions/getProgressAction';
-import { updateUserAnswerProgress } from '@/app/actions/updateProgressAction';
+import { updateUserAnswerProgress, updateUserUnitProgress } from '@/app/actions/updateProgressAction';
 import { AnswerOption, UserAnswer } from '@/app/lib/data';
 import { Radio, RadioGroup } from '@headlessui/react';
 import { CheckCircle, Circle } from 'lucide-react';
@@ -16,7 +16,9 @@ type MultipleChoiceQuestionProps = {
 	questionId: number;
 	userProgress: UserAnswer[];
 	activityId: number;
+	unitId: number;
 };
+
 
 const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 	questionNumber,
@@ -25,7 +27,8 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 	userId,
 	questionId, 
 	userProgress,
-	activityId
+	activityId,
+	unitId
 }) => { 
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(() => {
 		const existingAnswer = userProgress.find(answer => answer.questionId === questionId);
@@ -35,36 +38,49 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 		const existingAnswer = userProgress.find(answer => answer.questionId === questionId);
 		return existingAnswer?.isCorrect === 1 ? true : false;
 	}); 
+	const [attemptNumber, setAttemptNumber] = useState<number>(() => {
+		const existingAnswer = userProgress.find(answer => answer.questionId === questionId);
+		return existingAnswer?.attemptNumber ?? 1;
+	});
 
 	const handleOptionSelect = async (optionId: string) => { 
 		setSelectedAnswer(optionId); 
 		const correctOption = options.find(option => option.correct === 1); 
 		const correct = Boolean(correctOption?.id?.toString() === optionId?.toString());
 		setIsCorrect(correct);
+
 		const optionIdNumber = Number(optionId);
 
 		const currentUserProgress = await getUserAnswerProgressByActivityId({userId, activityId});
 		const existingAnswer = currentUserProgress?.find(answer => answer.questionId === questionId);
+		console.log("existingAnswer", existingAnswer);
 		
 		try {
 			if (existingAnswer) {
 				await updateUserAnswerProgress(
 					userId,
 					questionId,
+					existingAnswer.attemptNumber + 1,
 					optionIdNumber,
 					correct ? 1 : 0
 				);
+				setAttemptNumber(existingAnswer.attemptNumber + 1);
 			} else {
 				await addUserAnswerProgress(
 					userId,
 					questionId,
+					unitId,
+					1,
 					optionIdNumber,
 					correct ? 1 : 0
 				);
 			}
 
+			// Update unit progress
+			await updateUserUnitProgress(userId, unitId);
+
 		} catch (error) {
-			console.error('Failed to save answer:', error);
+			console.error('Failed to save answer and update progress:', error);
 		}
 	};
 
@@ -79,6 +95,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 					<span className="font-medium">{questionNumber}. </span>
 					{questionText}
 				</p>
+				<p className="text-sm">Attempt Number: {attemptNumber}</p>
 			</div>
 
 			<RadioGroup
@@ -92,7 +109,6 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 						key={option.id} 
 						value={option.id.toString()}
 					>
-
 						{({ checked }) => (
 							<label
 								className={`flex items-center gap-3 cursor-pointer ${

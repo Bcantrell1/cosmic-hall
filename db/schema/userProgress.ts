@@ -54,4 +54,5 @@ export const userAnswersTable = sqliteTable("user_answers", {
     isCorrect: int().notNull().default(0), // 0 or 1
     attemptNumber: int().notNull().default(1),
     answeredAt: text().notNull().default(sql`CURRENT_TIMESTAMP`),
+    unitId: int().references(() => unitsTable.id),
 });
