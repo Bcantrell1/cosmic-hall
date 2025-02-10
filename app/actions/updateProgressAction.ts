@@ -1,22 +1,14 @@
 "use server"
 
 import { db } from "@/db/index";
-import { userActivitiesTable,  userAnswersTable, userCoursesTable, userSessionsTable, userUnitsTable } from "@/db/schema/userProgress";
+import { userAnswersTable, userCoursesTable, userUnitsTable } from "@/db/schema/userProgress";
 import { and, eq, sql } from "drizzle-orm";
 
-import { 
-    getActivityIdFromQuestionId, 
-    getSessionIdFromActivityId, 
-    getUnitIdFromSessionId, 
+import {
     getCourseIdFromUnitId,
-    calculateActivityProgress,
-    calculateSessionProgress,
-    calculateUnitProgress,
-    calculateCourseProgress,
     getTotalQuestionsInUnit
 } from "./getProgressAction";
-import { questionsTable, sessionsTable, unitsTable } from "@/db/schema/courses";
-
+import { unitsTable } from "@/db/schema/courses";
 
 export async function updateUserCourseProgress(userId: string, courseId: number) {
     try {
@@ -24,9 +16,7 @@ export async function updateUserCourseProgress(userId: string, courseId: number)
             .select()
             .from(unitsTable)
             .where(eq(unitsTable.course_id, courseId));
-        console.log("units", units);
 
-        // Calculate average progress across all units
         let totalProgress = 0;
         for (const unit of units) {
             const unitProgress = await db
@@ -43,7 +33,6 @@ export async function updateUserCourseProgress(userId: string, courseId: number)
 
         const courseProgress = Math.round(totalProgress / units.length);
 
-        // Update course progress
         await db
             .update(userCoursesTable)
             .set({ progress: courseProgress })
@@ -63,7 +52,6 @@ export async function updateUserCourseProgress(userId: string, courseId: number)
 
 export async function updateUserUnitProgress(userId: string, unitId: number) {
     try {
-        // get only the answered questions in this unit
         const totalAnsweredQuestions = await db
             .select({ count: sql<number>`COUNT(*)` })
             .from(userAnswersTable)
@@ -72,19 +60,13 @@ export async function updateUserUnitProgress(userId: string, unitId: number) {
                     eq(userAnswersTable.userId, userId),
                     eq(userAnswersTable.isCorrect, 1),
                     eq(userAnswersTable.unitId, unitId)
-                )   
+                )
             );
-        console.log("totalAnsweredQuestions", totalAnsweredQuestions);
 
-
-        // compare the total answered questions to the total number of questions in this unit
         const totalQuestions = await getTotalQuestionsInUnit(unitId);
-        console.log("totalQuestions", totalQuestions);
 
         const progress = Math.round((totalAnsweredQuestions[0]?.count || 0) / (totalQuestions || 0) * 100);
-        console.log("progress", progress);
 
-        // Update unit progress
         await db
             .update(userUnitsTable)
             .set({ progress: progress })
@@ -95,7 +77,6 @@ export async function updateUserUnitProgress(userId: string, unitId: number) {
                 )
             );
 
-        // Update course progress
         const courseId = await getCourseIdFromUnitId(unitId);
         if (courseId) {
             await updateUserCourseProgress(userId, courseId);
@@ -110,11 +91,10 @@ export async function updateUserUnitProgress(userId: string, unitId: number) {
 
 export async function updateUserAnswerProgress(userId: string, questionId: number, attemptNumber: number, selectedOptionId: number, isCorrect: number) {
     try {
-        // Update the answer first
         await db
             .update(userAnswersTable)
-            .set({ 
-                selectedOptionId: selectedOptionId, 
+            .set({
+                selectedOptionId: selectedOptionId,
                 isCorrect: isCorrect,
                 attemptNumber: attemptNumber
             })
@@ -124,12 +104,6 @@ export async function updateUserAnswerProgress(userId: string, questionId: numbe
                     eq(userAnswersTable.questionId, questionId),
                 )
             );
-        
-        // Get activityId and update activity progress
-        // const activityId = await getActivityIdFromQuestionId(questionId);
-        // if (activityId) {
-        //     await updateUserActivityProgress(userId, activityId);
-        // }
 
         return {
             success: true,
