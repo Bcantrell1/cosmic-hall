@@ -80,8 +80,6 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 		}
 	}, [currentQuestion]);
 	
-
-
 	const handleNext = () => {
 		setSelectedIndex(selectedIndex + 1);
 	}
