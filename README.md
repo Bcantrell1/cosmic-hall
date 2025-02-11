@@ -12,6 +12,7 @@ A basic learning platform built with Next.js 15, headless ui, and Clerk, designe
 - **Interactive Sessions**: Structured learning activities with estimated duration tracking for each session
 - **Responsive Design**: Mobile and Desktop friendly experience 
 - **User Authentication**: Login and user management using Clerk.
+- **Progress Tracking**: Progress is tracked for each user in relation to a course -> unit -> session -> activity -> question.
 
 ## Tech Stack 🛠️
 
@@ -20,6 +21,8 @@ A basic learning platform built with Next.js 15, headless ui, and Clerk, designe
 - [Headless UI](https://headlessui.com/) - UI Components
 - [Tailwind CSS](https://tailwindcss.com/) - Styling
 - [Clerk](https://clerk.com/) - Authentication
+- [Turso](https://turso.tech/) - Database
+- [Drizzle ORM](https://drizzle.dev/) - Database ORM
 
 ## Prerequisites 📋
 
@@ -71,7 +74,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [x] Add database and ORM for progress tracking
 - [ ] Implement course search and filtering
 - [ ] Add course completion certificates
-- [ ] Add support for different content types (video, quizzes, assessments)
+- [/] Add support for different content types (video, quizzes, assessments)
 - [ ] Create admin dashboard for statistics
 - [x] Implement user feedback system
 - [ ] Host on Google Cloud Platform instead of vercel
