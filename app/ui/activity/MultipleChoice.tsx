@@ -86,7 +86,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 
 	return (
 		<>
-			<div className="flex items-start gap-2 mb-4">
+			<div className="flex items-start gap-2 mb-2 mt-4">
 				<QuestionFeedback
 					selectedAnswer={selectedAnswer} 
 					isCorrect={isCorrect} 

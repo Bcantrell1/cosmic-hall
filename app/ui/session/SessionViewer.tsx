@@ -115,15 +115,15 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 				onChange={setSelectedIndex}
 			/>
 			<section className="flex flex-col w-full">
-				<div className="flex p-4 justify-between">
-					<div className="flex gap-2">
-						<div>{id}</div>
-						<div>{title}</div>
+				<div className="flex flex-col sm:flex-row p-4 justify-between items-center bg-indigo-800 text-white rounded-t-lg shadow-md">
+					<div className="flex flex-col sm:flex-row sm:gap-3 items-center mb-2 sm:mb-0">
+						<div className="text-sm text-indigo-200">Session {id}</div>
+						<h1 className="text-xl font-semibold">{title}</h1>
 					</div>
-					<div className="flex gap-2">
-						<div>{selectedIndex + 1}</div>
-						of
-						<div>{activities.length}</div>
+					<div className="flex items-center gap-2 text-sm bg-indigo-700 px-3 py-1 rounded-full">
+						<span className="font-semibold">{selectedIndex + 1}</span>
+						<span className="text-indigo-200">of</span>
+						<span className="font-semibold">{activities.length}</span>
 					</div>
 				</div>
 				
@@ -133,8 +133,9 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 						duration={Number(activities[selectedIndex].duration)}
 						userProgress={userProgress}
 					/>
-					
-					{activities[selectedIndex]?.description}
+					<div className="text-md mt-2">
+						{activities[selectedIndex]?.description}
+					</div>
 
 					{currentQuestion && userId && !isLoadingOptions && (
 						<QuestionViewer
