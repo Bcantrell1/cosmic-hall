@@ -4,6 +4,7 @@ import { Course, UserCourse } from "@/app/lib/data";
 import { Button } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 type CourseCardProps = Course & {
 	progress?: UserCourse;
@@ -17,6 +18,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 	progress,
 	userId
 }) => {
+	const [imageLoading, setImageLoading] = useState(true);
+
 	const buttonText = (progress: number) => {
 		if (progress == 100) return "Completed";
 		if (progress == 0) return "Start Course";
@@ -33,7 +36,22 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 	return (
 
 		<div className="w-[350px] p-6 bg-indigo-800 text-white rounded-lg shadow-lg flex flex-col">
-			<Image src={'https://placehold.co/350x200/png'} className="rounded pb-2" width={350} height={200} priority={true} alt="" />
+			<div className="relative">
+				{imageLoading && (
+					<div className="absolute inset-0 flex items-center justify-center">
+						<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+					</div>
+				)}
+				<Image 
+					src={'https://spaceholder.cc/i/350x200'} 
+					className={`rounded pb-2 ${imageLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+					width={350} 
+					height={200} 
+					priority={true} 
+					alt=""
+					onLoadingComplete={() => setImageLoading(false)}
+				/>
+			</div>
 			<div className="flex items-center gap-2 mb-4">
 				<h3 className="text-xl font-semibold">{title}</h3>
 			</div>
