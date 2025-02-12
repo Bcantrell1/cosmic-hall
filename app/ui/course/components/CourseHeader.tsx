@@ -4,7 +4,7 @@ import { Menu as MenuIcon, X } from 'lucide-react';
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from 'react';
-import ClerkUserButton from "../ClerkUserButton";
+import ClerkUserButton from '@/app/ui/ClerkUserButton';
 
 export default function CourseHeader() {
 	const [isOpen, setIsOpen] = useState(false);

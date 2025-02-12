@@ -1,4 +1,4 @@
-import CourseHeader from "../ui/course/CourseHeader"
+import CourseHeader from "../ui/course/components/CourseHeader"
 
 export const metadata = {
 	title: 'Cosmic Hall | Course List',

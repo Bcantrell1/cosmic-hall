@@ -1,5 +1,5 @@
 import { AnswerOption, Questions, UserAnswer } from "@/app/lib/data";
-import MultipleChoiceQuestion from "../../activity/MultipleChoice";
+import MultipleChoiceQuestion from "./MultipleChoice";
 
 type QuestionViewerProps = {
   userId: string;
