@@ -20,33 +20,32 @@ export default async function CoursePage({
 
 	const { courseId } = await params;
 
-	const [course] = await db
-    	.select()
-    	.from(coursesTable)
-        .where(eq(coursesTable.id, Number(courseId)));
+	const [course, units, sessions, unitProgress, sessionProgress] = await Promise.all([
+		db
+			.select()
+			.from(coursesTable)
+			.where(eq(coursesTable.id, Number(courseId)))
+			.then(rows => rows[0]),
+		db
+			.select()
+			.from(unitsTable)
+			.where(eq(unitsTable.course_id, Number(courseId))),
+		db
+			.select()
+			.from(sessionsTable),
+		db
+			.select()
+			.from(userUnitsTable)
+			.where(eq(userUnitsTable.userId, userId)),
+		db
+			.select()
+			.from(userSessionsTable)
+			.where(eq(userSessionsTable.userId, userId))
+	]);
 
 	if (!course) {
         notFound();
     }
-
-	const units = await db
-		.select()
-		.from(unitsTable)
-		.where(eq(unitsTable.course_id, Number(courseId)));
-	
-	const sessions = await db
-		.select()
-		.from(sessionsTable);
-
-	const unitProgress = await db
-		.select()
-		.from(userUnitsTable)
-		.where(eq(userUnitsTable.userId, userId));
-	
-	const sessionProgress = await db
-		.select()
-		.from(userSessionsTable)
-		.where(eq(userSessionsTable.userId, userId));
 
 	return (
 		<div className="container mx-auto p-6">
@@ -59,4 +58,22 @@ export default async function CoursePage({
 			<CourseViewer course={course} userId={userId} units={units} sessions={sessions} unitProgress={unitProgress} sessionProgress={sessionProgress} />
 		</div>
 	);
+}
+
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ courseId: string }>;
+}) {
+	const { courseId } = await params;
+
+	const [course] = await db
+		.select()
+		.from(coursesTable)
+		.where(eq(coursesTable.id, Number(courseId)));
+
+	return {
+		title: course ? `${course.title} | Cosmic Hall` : 'Course | Cosmic Hall',
+		description: course?.description || 'Learn about the cosmos',
+	};
 }

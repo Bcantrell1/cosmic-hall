@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { eq } from 'drizzle-orm';
 import { auth } from '@clerk/nextjs/server';
 import { Breadcrumbs } from '@/app/ui/common/Breadcrumbs';
+import { Metadata } from 'next';
 
 export default async function SessionPage({
 	params
@@ -18,26 +19,25 @@ export default async function SessionPage({
 	}
 
 	const { courseId, sessionId } = await params;
-	const [session] = await db
-        .select()
-        .from(sessionsTable)
-        .where(eq(sessionsTable.id, Number(sessionId)));
 
-	if (!session) {
-        notFound();
-    }
+	const [session, activities, course] = await Promise.all([
+		db
+			.select()
+			.from(sessionsTable)
+			.where(eq(sessionsTable.id, Number(sessionId)))
+			.then(rows => rows[0]),
+		db
+			.select()
+			.from(activitiesTable)
+			.where(eq(activitiesTable.session_id, Number(sessionId))),
+		db
+			.select()
+			.from(coursesTable)
+			.where(eq(coursesTable.id, Number(courseId)))
+			.then(rows => rows[0])
+	]);
 
-	const activities = await db
-        .select()
-        .from(activitiesTable)
-        .where(eq(activitiesTable.session_id, Number(sessionId)));
-
-	const [course] = await db
-		.select()
-		.from(coursesTable)
-		.where(eq(coursesTable.id, Number(courseId)));
-
-	if (!course) {
+	if (!session || !course) {
 		notFound();
 	}
 
@@ -52,6 +52,23 @@ export default async function SessionPage({
 			/>
 			<SessionViewer session={session} activities={activities} userId={userId} />
 		</div>
-
 	);
+}
+
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ courseId: string; sessionId: string; }>
+}): Promise<Metadata> {
+	const { sessionId } = await params;
+
+	const [session] = await db
+		.select()
+		.from(sessionsTable)
+		.where(eq(sessionsTable.id, Number(sessionId)));
+
+	return {
+		title: session ? `${session.title} | Cosmic Hall` : 'Session | Cosmic Hall',
+		description: session?.description || 'Learn about the cosmos',
+	};
 }

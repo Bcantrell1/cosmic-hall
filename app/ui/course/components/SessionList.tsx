@@ -21,7 +21,7 @@ export const SessionList: React.FC<SessionListProps> = ({
     }
 
     return (
-        <div className="p-4 bg-gray-50">
+        <div className="p-4 bg-indigo-50">
             {sessions
                 .filter(session => session.unit_id == unitId)
                 .map((session, index) => (
@@ -29,14 +29,14 @@ export const SessionList: React.FC<SessionListProps> = ({
                         key={session.id}
                         className="flex justify-between items-center py-2"
                     >
-                        <span>Session {index + 1}: {session.title}</span>
+                        <span>{index + 1}. {session.title}</span>
                         <div className="flex items-center gap-4">
                             <span className="text-gray-600 hidden sm:block">
                                 Duration: {session.duration} mins
                             </span>
                             <Button 
                                 onClick={() => onSessionStart(session.id, unitId)} 
-                                className="px-3 py-1 text-sm bg-blue-500 text-white rounded"
+                                className="px-3 py-1 text-sm bg-indigo-600 text-white rounded"
                             >
                                 {buttonText(
                                     sessionProgress?.find(
