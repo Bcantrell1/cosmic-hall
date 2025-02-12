@@ -1,7 +1,7 @@
 import CourseHeader from "../ui/course/CourseHeader"
 
 export const metadata = {
-	title: 'Cosmic Hall | Course',
+	title: 'Cosmic Hall | Course List',
 	description: 'Course selection for the Cosmic Hall.',
 }
 

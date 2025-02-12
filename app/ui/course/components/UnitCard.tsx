@@ -24,8 +24,8 @@ export const UnitCard: React.FC<UnitCardProps> = ({
     const progress = unitProgress?.find(progress => progress.unitId === unit.id)?.progress ?? 0;
 
     return (
-        <div className="border rounded-lg">
-            <div className="p-4 border-b">
+        <div className="border border-indigo-100 rounded-lg">
+            <div className="p-4 border-b border-indigo-100">
                 <div className="flex flex-col md:flex-row items-center justify-between">
                     <h3 className="font-medium">Unit {index + 1}: {unit.title}</h3>
                     <span className="text-sm text-gray-600">
@@ -38,7 +38,7 @@ export const UnitCard: React.FC<UnitCardProps> = ({
             <Disclosure>
                 {({ open }) => (
                     <div>
-                        <DisclosureButton className="w-full p-4 flex justify-between items-center hover:bg-gray-50">
+                        <DisclosureButton className="w-full p-4 flex justify-between items-center hover:bg-indigo-50">
                             <span>View Sessions</span>
                             <ChevronDown
                                 className={`w-5 h-5 transform transition-transform ${open ? 'rotate-180' : ''}`}
