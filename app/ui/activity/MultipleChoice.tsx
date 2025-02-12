@@ -9,7 +9,6 @@ import React, { useState } from 'react';
 import QuestionFeedback from './QuestionFeedback';
 
 type MultipleChoiceQuestionProps = {
-	questionNumber: number;
 	questionText: string;
 	options: AnswerOption[];
 	userId: string;
@@ -21,7 +20,6 @@ type MultipleChoiceQuestionProps = {
 
 
 const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
-	questionNumber,
 	questionText,
 	options,
 	userId,
@@ -53,7 +51,6 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 
 		const currentUserProgress = await getUserAnswerProgressByActivityId({userId, activityId});
 		const existingAnswer = currentUserProgress?.find(answer => answer.questionId === questionId);
-		console.log("existingAnswer", existingAnswer);
 		
 		try {
 			if (existingAnswer) {
@@ -76,7 +73,6 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 				);
 			}
 
-			// Update unit progress
 			await updateUserUnitProgress(userId, unitId);
 
 		} catch (error) {
@@ -85,23 +81,28 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 	};
 
 	return (
-		<>
-			<div className="flex items-start gap-2 mb-2 mt-4">
-				<QuestionFeedback
-					selectedAnswer={selectedAnswer} 
-					isCorrect={isCorrect} 
-				/>
-				<p className="text-sm">
-					<span className="font-medium">{questionNumber}. </span>
-					{questionText}
-				</p>
-				<p className="text-sm">Attempt Number: {attemptNumber}</p>
-			</div>
+		<div className="w-full">
+			<div className="flex flex-col gap-2 mb-4 mt-4">
+            <div className="flex justify-between items-center w-full">
+                <div className="text-xs font-medium text-gray-500">
+                    Attempt{ Number(attemptNumber) > 1 ? `s` : null} {attemptNumber}
+                </div>
+            </div>
+            <div className="flex items-start gap-2">
+                <QuestionFeedback
+                    selectedAnswer={selectedAnswer} 
+                    isCorrect={isCorrect} 
+                />
+                <p className="text-sm flex-grow">
+                    {questionText}
+                </p>
+            </div>
+        </div>
 
 			<RadioGroup
 				value={selectedAnswer}
 				onChange={(value) => handleOptionSelect(value?.toString() ?? '')}
-				className="ml-8 space-y-2"
+				className="space-y-3 md:ml-8"
 				disabled={isCorrect !== null && isCorrect === true}
 			>
 				{options.length > 0 && options.map((option) => (
@@ -111,11 +112,11 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 					>
 						{({ checked }) => (
 							<label
-								className={`flex items-center gap-3 cursor-pointer ${
-									checked ? 'text-indigo-500' : 'text-gray-700'
+								className={`flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer ${
+									checked ? 'text-indigo-500 bg-indigo-50' : 'text-gray-700'
 								}`}
 							>
-								<div className="flex items-center justify-center">
+								<div className="flex items-center justify-center flex-shrink-0">
 									{checked ? (
 										<CheckCircle className="w-6 h-6 text-indigo-500" />
 									) : (
@@ -128,7 +129,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
 					</Radio>
 				))}
 			</RadioGroup>
-		</>
+		</div>
 	);
 };
 

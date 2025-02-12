@@ -22,7 +22,7 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 	userId,
 }) => {
 	const [selectedIndex, setSelectedIndex] = useState<number>(0);
-	const { id, title } = session;
+	const { title } = session;
 	const [questions, setQuestions] = useState<Questions[]>([]);
 	const [options, setOptions] = useState<AnswerOption[]>([]);
 	const [currentQuestion, setCurrentQuestion] = useState<Questions | null>(null);
@@ -115,7 +115,6 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 			<section className="flex flex-col w-full">
 				<div className="flex flex-col sm:flex-row p-4 justify-between items-center bg-indigo-800 text-white rounded-t-lg shadow-md">
 					<div className="flex flex-col sm:flex-row sm:gap-3 items-center mb-2 sm:mb-0">
-						<div className="text-sm text-indigo-200">Session {id}</div>
 						<h1 className="text-xl font-semibold">{title}</h1>
 					</div>
 					<div className="flex items-center gap-2 text-sm bg-indigo-700 px-3 py-1 rounded-full">
@@ -125,7 +124,7 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 					</div>
 				</div>
 				
-				<div className="bg-white p-4 rounded-lg">
+				<div className="bg-white p-4">
 					<ActivityHeader
 						title={activities[selectedIndex].title}
 						duration={Number(activities[selectedIndex].duration)}
@@ -145,7 +144,7 @@ export const SessionViewer: React.FC<SessionViewerProps> = ({
 							unitId={questions[0]?.unit_id?.toString() || ''}
 						/>
 					)}
-
+					<div className="h-4"></div>
 					<NavigationControls
 						onNext={handleNext}
 						onPrevious={handlePrevious}

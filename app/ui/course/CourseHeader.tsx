@@ -30,7 +30,7 @@ export default function CourseHeader() {
 		));
 
 	return (
-		<nav className="bg-indigo-200 px-4 py-2">
+		<nav className="bg-indigo-200 px-4 py-2 border-b-4 border-indigo-700">
 			<div className="mx-auto container">
 				<div className="flex items-center justify-between">
 					<Link href="/" className="flex items-center">

@@ -23,7 +23,6 @@ export const QuestionViewer = ({
     userId={userId}
     questionId={currentQuestion.id}
     key={currentQuestion.id}
-    questionNumber={currentQuestion.id}
     questionText={currentQuestion.question}
     options={options}
     userProgress={userProgress}

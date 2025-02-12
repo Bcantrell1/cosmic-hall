@@ -41,7 +41,7 @@ const Sidebar = ({ activities, selectedIndex, onChange }: SidebarProps) => {
 					<span>Activity Outline</span>
 				</div>
 				<TabGroup selectedIndex={selectedIndex} onChange={handleTabChange}>
-					<TabList className="flex-none border-r min-h-screen">
+					<TabList className="flex-none border-r h-full">
 						{activities.map((activity) => (
 							<Tab
 								key={activity.id}

@@ -32,7 +32,7 @@ export default function RootLayout({
 					className={`min-h-screen flex flex-col antialiased`}
 				>
 					<main className='flex-1'>{children}</main>
-					<footer className='p-2 bg-indigo-200 text-center'>
+					<footer className='p-2 bg-indigo-200 text-center border-t-4 border-indigo-700'>
 						<a href="https://github.com/Bcantrell1" className='underline italic' target="_blank">Brian Cantrell</a> had fun building this <a href="https://github.com/Bcantrell1/cosmic-hall" className='underline' target="_blank">project</a>!
 					</footer>
 				</body>
