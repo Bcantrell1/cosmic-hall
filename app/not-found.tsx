@@ -17,12 +17,12 @@ export default function NotFound() {
       
       <h1 className="text-6xl md:text-8xl font-bold mb-4">404</h1>
       <h2 className="text-2xl md:text-3xl mb-8 text-center">
-        Lost in Space? This Page Doesn't Exist
+        Lost in Space? This Page Doesn&apos;t Exist
       </h2>
       
       <p className="text-indigo-300 mb-8 text-center max-w-md">
-        Looks like you've ventured too far into the cosmos. 
-        Let's get you back to familiar territory.
+        Looks like you&apos;ve ventured too far into the cosmos. 
+        Let&apos;s get you back to familiar territory.
       </p>
 
       <Button
