@@ -1,5 +1,5 @@
 import { getCourseProgress } from "@/app/actions/getProgressAction";
-import { CourseCard } from "@/app/ui/course/CourseCard";
+import { CourseCard } from "@/app/ui/course/components/CourseCard";
 import { db } from "@/db/index";
 import { coursesTable } from "@/db/schema/courses";
 import { auth } from "@clerk/nextjs/server";
