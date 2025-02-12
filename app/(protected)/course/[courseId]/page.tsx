@@ -1,12 +1,11 @@
 import { CourseViewer } from "@/app/ui/course/CourseViewer";
 import { db } from "@/db";
 import { coursesTable, sessionsTable, unitsTable } from "@/db/schema/courses";
-import { Button } from "@headlessui/react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { eq } from "drizzle-orm";
 import { auth } from "@clerk/nextjs/server";
 import { userSessionsTable, userUnitsTable } from "@/db/schema/userProgress";
+import { Breadcrumbs } from "@/app/ui/common/Breadcrumbs";
 
 export default async function CoursePage({
 	params
@@ -51,7 +50,12 @@ export default async function CoursePage({
 
 	return (
 		<div className="container mx-auto p-6">
-			<Button as={Link} href={`/courses`}>Back to Courses</Button>
+			<Breadcrumbs
+				items={[
+					{ label: 'Courses', href: '/courses' },
+					{ label: course.title, href: `/course/${courseId}` },
+				]}
+			/>
 			<CourseViewer course={course} userId={userId} units={units} sessions={sessions} unitProgress={unitProgress} sessionProgress={sessionProgress} />
 		</div>
 	);

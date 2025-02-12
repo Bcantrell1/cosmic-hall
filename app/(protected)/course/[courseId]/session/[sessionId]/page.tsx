@@ -1,11 +1,10 @@
 import { SessionViewer } from '@/app/ui/session/SessionViewer';
 import { db } from '@/db';
-import { activitiesTable, sessionsTable } from '@/db/schema/courses';
-import { Button } from '@headlessui/react';
-import Link from 'next/link';
+import { activitiesTable, coursesTable, sessionsTable } from '@/db/schema/courses';
 import { notFound } from 'next/navigation';
 import { eq } from 'drizzle-orm';
 import { auth } from '@clerk/nextjs/server';
+import { Breadcrumbs } from '@/app/ui/common/Breadcrumbs';
 
 export default async function SessionPage({
 	params
@@ -33,9 +32,24 @@ export default async function SessionPage({
         .from(activitiesTable)
         .where(eq(activitiesTable.session_id, Number(sessionId)));
 
+	const [course] = await db
+		.select()
+		.from(coursesTable)
+		.where(eq(coursesTable.id, Number(courseId)));
+
+	if (!course) {
+		notFound();
+	}
+
 	return (
 		<div className="container mx-auto p-6">
-			<Button as={Link} href={`/course/${courseId}`}>Back to Course</Button>
+			<Breadcrumbs
+				items={[
+					{ label: 'Courses', href: '/courses' },
+					{ label: course.title, href: `/course/${courseId}` },
+					{ label: session.title, href: `/course/${courseId}/session/${sessionId}` },
+				]}
+			/>
 			<SessionViewer session={session} activities={activities} userId={userId} />
 		</div>
 

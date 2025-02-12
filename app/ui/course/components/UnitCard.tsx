@@ -26,7 +26,7 @@ export const UnitCard: React.FC<UnitCardProps> = ({
     return (
         <div className="border rounded-lg">
             <div className="p-4 border-b">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col md:flex-row items-center justify-between">
                     <h3 className="font-medium">Unit {index + 1}: {unit.title}</h3>
                     <span className="text-sm text-gray-600">
                         {progress}% Complete

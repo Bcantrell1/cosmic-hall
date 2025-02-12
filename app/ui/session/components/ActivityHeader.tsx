@@ -10,7 +10,7 @@ export const ActivityHeader = ({ title, duration, userProgress }: ActivityHeader
   const isCompleted = userProgress.length > 0;
   
   return (
-    <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center p-4 bg-white rounded-lg shadow-sm">
+    <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between items-start sm:items-center py-4 bg-white rounded-lg">
       <h1 className="text-xl font-semibold text-gray-800">{title}</h1>
       
       <div className="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto">

@@ -32,9 +32,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 		}
 	}
 
-
 	return (
-
 		<div className="w-[350px] p-6 bg-indigo-800 text-white rounded-lg shadow-lg flex flex-col">
 			<div className="relative">
 				{imageLoading && (
@@ -49,7 +47,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 					height={200} 
 					priority={true} 
 					alt=""
-					onLoadingComplete={() => setImageLoading(false)}
+					onLoad={() => setImageLoading(false)}
 				/>
 			</div>
 			<div className="flex items-center gap-2 mb-4">
