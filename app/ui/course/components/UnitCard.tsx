@@ -2,7 +2,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react
 import { ChevronDown } from 'lucide-react';
 import { Unit, UserUnit, Session, UserSession } from '@/app/lib/data';
 import { UnitProgressBar } from './UnitProgressBar';
-import { SessionList } from './SessionList';
+import { SessionList } from '../../session/components/SessionList';
 
 type UnitCardProps = {
     unit: Unit;
