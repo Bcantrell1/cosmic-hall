@@ -18,7 +18,11 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
                                 {item.label}
                             </span>
                         ) : (
-                            <Button as={Link} href={item.href} className={`text-sm hover:text-indigo-600 transition-colors ${item.label.length > 15 ? 'truncate' : ''}`}>
+                            <Button
+                                as={Link}
+                                href={item.href}
+                                className={`text-sm hover:text-indigo-600 transition-colors ${item.label.length > 15 ? 'truncate' : ''}`}
+                            >
                                 {item.label}
                             </Button>
                         )}
@@ -27,4 +31,4 @@ export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
             </ol>
         </nav>
     );
-} 
+}
