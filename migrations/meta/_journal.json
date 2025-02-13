@@ -1,90 +1,90 @@
 {
-  "version": "7",
-  "dialect": "sqlite",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "6",
-      "when": 1738130128364,
-      "tag": "0000_strange_wolf_cub",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1738138475791,
-      "tag": "0001_remarkable_nocturne",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1738142006480,
-      "tag": "0002_black_crystal",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1738142066340,
-      "tag": "0003_wide_lilandra",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1738142393555,
-      "tag": "0004_eager_falcon",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "6",
-      "when": 1738142461476,
-      "tag": "0005_acoustic_puppet_master",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "6",
-      "when": 1738142650755,
-      "tag": "0006_cynical_satana",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "6",
-      "when": 1738186985228,
-      "tag": "0007_fluffy_mojo",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "6",
-      "when": 1738194419880,
-      "tag": "0008_acoustic_mockingbird",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "6",
-      "when": 1738198419363,
-      "tag": "0009_flaky_microbe",
-      "breakpoints": true
-    },
-    {
-      "idx": 10,
-      "version": "6",
-      "when": 1739166240048,
-      "tag": "0010_mighty_elektra",
-      "breakpoints": true
-    },
-    {
-      "idx": 11,
-      "version": "6",
-      "when": 1739167432644,
-      "tag": "0011_green_salo",
-      "breakpoints": true
-    }
-  ]
+    "version": "7",
+    "dialect": "sqlite",
+    "entries": [
+        {
+            "idx": 0,
+            "version": "6",
+            "when": 1738130128364,
+            "tag": "0000_strange_wolf_cub",
+            "breakpoints": true
+        },
+        {
+            "idx": 1,
+            "version": "6",
+            "when": 1738138475791,
+            "tag": "0001_remarkable_nocturne",
+            "breakpoints": true
+        },
+        {
+            "idx": 2,
+            "version": "6",
+            "when": 1738142006480,
+            "tag": "0002_black_crystal",
+            "breakpoints": true
+        },
+        {
+            "idx": 3,
+            "version": "6",
+            "when": 1738142066340,
+            "tag": "0003_wide_lilandra",
+            "breakpoints": true
+        },
+        {
+            "idx": 4,
+            "version": "6",
+            "when": 1738142393555,
+            "tag": "0004_eager_falcon",
+            "breakpoints": true
+        },
+        {
+            "idx": 5,
+            "version": "6",
+            "when": 1738142461476,
+            "tag": "0005_acoustic_puppet_master",
+            "breakpoints": true
+        },
+        {
+            "idx": 6,
+            "version": "6",
+            "when": 1738142650755,
+            "tag": "0006_cynical_satana",
+            "breakpoints": true
+        },
+        {
+            "idx": 7,
+            "version": "6",
+            "when": 1738186985228,
+            "tag": "0007_fluffy_mojo",
+            "breakpoints": true
+        },
+        {
+            "idx": 8,
+            "version": "6",
+            "when": 1738194419880,
+            "tag": "0008_acoustic_mockingbird",
+            "breakpoints": true
+        },
+        {
+            "idx": 9,
+            "version": "6",
+            "when": 1738198419363,
+            "tag": "0009_flaky_microbe",
+            "breakpoints": true
+        },
+        {
+            "idx": 10,
+            "version": "6",
+            "when": 1739166240048,
+            "tag": "0010_mighty_elektra",
+            "breakpoints": true
+        },
+        {
+            "idx": 11,
+            "version": "6",
+            "when": 1739167432644,
+            "tag": "0011_green_salo",
+            "breakpoints": true
+        }
+    ]
 }

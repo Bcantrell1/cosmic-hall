@@ -1,6 +1,6 @@
 type UnitProgressBarProps = {
     progress: number;
-}
+};
 
 export const UnitProgressBar: React.FC<UnitProgressBarProps> = ({ progress }) => {
     return (
@@ -15,4 +15,4 @@ export const UnitProgressBar: React.FC<UnitProgressBarProps> = ({ progress }) =>
             </div>
         </div>
     );
-}; 
+};

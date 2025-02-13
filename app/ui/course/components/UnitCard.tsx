@@ -1,8 +1,8 @@
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@headlessui/react";
-import { ChevronDown } from "lucide-react";
-import { Unit, UserUnit, Session, UserSession } from "@/app/lib/data";
-import { UnitProgressBar } from "./UnitProgressBar";
-import { SessionList } from "./SessionList";
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
+import { ChevronDown } from 'lucide-react';
+import { Unit, UserUnit, Session, UserSession } from '@/app/lib/data';
+import { UnitProgressBar } from './UnitProgressBar';
+import { SessionList } from './SessionList';
 
 type UnitCardProps = {
     unit: Unit;
@@ -11,7 +11,7 @@ type UnitCardProps = {
     unitProgress?: UserUnit[];
     sessionProgress?: UserSession[];
     onSessionStart: (sessionId: number, unitId: number) => void;
-}
+};
 
 export const UnitCard: React.FC<UnitCardProps> = ({
     unit,
@@ -19,22 +19,22 @@ export const UnitCard: React.FC<UnitCardProps> = ({
     sessions,
     unitProgress,
     sessionProgress,
-    onSessionStart
+    onSessionStart,
 }) => {
-    const progress = unitProgress?.find(progress => progress.unitId === unit.id)?.progress ?? 0;
+    const progress = unitProgress?.find((progress) => progress.unitId === unit.id)?.progress ?? 0;
 
     return (
         <div className="border border-indigo-100 rounded-lg">
             <div className="p-4 border-b border-indigo-100">
                 <div className="flex flex-col md:flex-row items-center justify-between">
-                    <h3 className="font-medium">Unit {index + 1}: {unit.title}</h3>
-                    <span className="text-sm text-gray-600">
-                        {progress}% Complete
-                    </span>
+                    <h3 className="font-medium">
+                        Unit {index + 1}: {unit.title}
+                    </h3>
+                    <span className="text-sm text-gray-600">{progress}% Complete</span>
                 </div>
                 <UnitProgressBar progress={progress} />
             </div>
-            
+
             <Disclosure>
                 {({ open }) => (
                     <div>
@@ -57,4 +57,4 @@ export const UnitCard: React.FC<UnitCardProps> = ({
             </Disclosure>
         </div>
     );
-}; 
+};

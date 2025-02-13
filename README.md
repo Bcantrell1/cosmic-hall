@@ -3,14 +3,14 @@
 A basic learning platform built with Next.js 15, headless ui, and Clerk, designed to provide an engaging course experience for curious minds.
 
 ![Wireframes for page structure](./public/wireframes.png)
-*Platform wireframes showing course selection, course overview, and session views*
+_Platform wireframes showing course selection, course overview, and session views_
 
 ## Features ✨
 
 - **Course Selection**: Browse and select from available courses with static progress tracking
 - **Basic Course Overview**: Comprehensive view of course units, sessions, and progress(WIP)
 - **Interactive Sessions**: Structured learning activities with estimated duration tracking for each session
-- **Responsive Design**: Mobile and Desktop friendly experience 
+- **Responsive Design**: Mobile and Desktop friendly experience
 - **User Authentication**: Login and user management using Clerk.
 - **Progress Tracking**: Progress is tracked for each user in relation to a course -> unit -> session -> activity -> question.
 
@@ -32,16 +32,19 @@ A basic learning platform built with Next.js 15, headless ui, and Clerk, designe
 ## Installation 🚀
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/Bcantrell1/cosmic-hall.git
 ```
 
 2. Navigate to the project directory:
+
 ```bash
 cd cosmic-hall
 ```
 
 3. Install dependencies:
+
 ```bash
 pnpm install
 # or
@@ -51,6 +54,7 @@ yarn
 ```
 
 4. Create a `.env.local` file in the root directory:
+
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your-public-clerk-key
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
@@ -59,6 +63,7 @@ CLERK_SECRET_KEY=your-clerk-key
 ```
 
 5. Start the development server:
+
 ```bash
 pnpm run dev
 # or
