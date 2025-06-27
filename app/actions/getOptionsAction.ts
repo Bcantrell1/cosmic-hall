@@ -1,6 +1,6 @@
 'use server';
 
-import { DatabaseError, NotFoundError, ValidationError } from '@/app/lib/errors';
+import { NotFoundError, ValidationError } from '@/app/lib/errors';
 import { validateInput } from '@/app/lib/validation-utils';
 import { getOptionsSchema } from '@/app/lib/validations';
 import { db } from '@/db';
@@ -10,7 +10,7 @@ import { eq } from 'drizzle-orm';
 export async function getOptions(questionId: number) {
     try {
         // Validate input
-        const validatedData: any = validateInput(getOptionsSchema, { questionId });
+        const validatedData = validateInput(getOptionsSchema, { questionId });
         
         const options = await db
             .select()

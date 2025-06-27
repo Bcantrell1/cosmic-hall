@@ -1,6 +1,6 @@
 'use server';
 
-import { DatabaseError, NotFoundError, ValidationError } from '@/app/lib/errors';
+import { NotFoundError, ValidationError } from '@/app/lib/errors';
 import { validateInput } from '@/app/lib/validation-utils';
 import { getQuestionsSchema } from '@/app/lib/validations';
 import { db } from '@/db';
@@ -10,7 +10,7 @@ import { eq } from 'drizzle-orm';
 export async function getQuestions(activityId: number) {
     try {
         // Validate input
-        const validatedData: any = validateInput(getQuestionsSchema, { activityId });
+        const validatedData = validateInput(getQuestionsSchema, { activityId });
         
         const questions = await db
             .select()
