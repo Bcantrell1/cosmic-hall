@@ -4,7 +4,7 @@ import { Input } from "@headlessui/react";
 
 export function CourseSearch({ onSearch, searchQuery }: { onSearch: (query: string) => void, searchQuery: string }) {
     return (
-        <div className="w-full mb-6">
+        <div className="w-full max-w-md mb-6">
             <Input
                 type="text"
                 placeholder="Search courses..."

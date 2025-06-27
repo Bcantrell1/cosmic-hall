@@ -5,7 +5,7 @@ export default function Loading() {
                 <div className="h-8 w-48 bg-gray-200 rounded animate-pulse"></div>
             </div>
             <section className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] place-items-center">
-                {[1, 2, 3, 4].map((i) => (
+                {[1, 2, 3, 4, 5, 6].map((i) => (
                     <div
                         key={i}
                         className="w-[350px] h-[400px] bg-gray-200 rounded-lg animate-pulse"
